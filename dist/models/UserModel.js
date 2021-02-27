@@ -85,16 +85,24 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
         key: "login",
         value: async function login(username, password) {
             try {
-                console.log("ACA");
                 // Busqueda por nombre de usuario
                 var find = await this.find({ userName: username });
-                console.log(find);
                 if (find === 'undefined' || find.length <= 0) {
                     return "Usuario no existe";
                 } // Revisa si la contraseña es la guardada
                 else if (find[0].password !== password) {
                         return "Constraseña incorrecta";
                     } else return "Login OK";
+            } catch (error) {
+                return error;
+            }
+        }
+    }, {
+        key: "getUserInfo",
+        value: async function getUserInfo(idNum) {
+            try {
+                var find = await this.find({ id: idNum });
+                return find;
             } catch (error) {
                 return error;
             }

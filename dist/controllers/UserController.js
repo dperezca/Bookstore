@@ -42,12 +42,19 @@ UserController.login = async function (req, res) {
 
         var username = body.username;
         var password = body.password;
-        console.log(username, password);
         var login = await userRepository.login(username, password);
         res.json(login);
     } catch (error) {
         return error;
     }
+};
+
+//User Info
+UserController.userInfo = async function (req, res) {
+    var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
+    console.log(req.params.id);
+    var rta = await userRepository.getUserInfo(req.params.id);
+    res.json(rta);
 };
 
 module.exports = UserController;

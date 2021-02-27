@@ -35,7 +35,6 @@ UserController.login = async(req,res) => {
         const {body} = req;
         const username = body.username;
         const password = body.password;
-        console.log(username, password);
         const login = await userRepository.login(username, password);
         res.json(login);
     }
@@ -43,5 +42,13 @@ UserController.login = async(req,res) => {
             return error;
         }
     }
+
+//User Info
+UserController.userInfo = async(req,res) => {
+    const userRepository = new getCustomRepository(UserRepository);
+    console.log(req.params.id);
+    const rta = await userRepository.getUserInfo(req.params.id);
+    res.json(rta);
+  }
 
 module.exports = UserController;

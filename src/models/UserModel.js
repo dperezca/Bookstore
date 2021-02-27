@@ -53,10 +53,8 @@ export class UserRepository extends Repository {
     //Login
     async login(username, password) {
         try {
-            console.log("ACA");
             // Busqueda por nombre de usuario
             const find = await this.find({userName: username});
-            console.log(find);
             if (find === 'undefined' || find.length <= 0) {
                 return "Usuario no existe";
             } // Revisa si la contraseña es la guardada
@@ -70,4 +68,13 @@ export class UserRepository extends Repository {
         }
     }
 
+    async getUserInfo(idNum) {
+        try {
+            const find = await this.find({id: idNum});
+            return find;
+        }
+        catch (error) {
+            return error;
+        }
+    }
 }

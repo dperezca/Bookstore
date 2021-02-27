@@ -14,5 +14,6 @@ router.put('/:id', UserController.updateUser);
 router.get('/login/', UserController.login);
 
 // Ver datos de usuario
+router.get('/find/:id', UserController.userInfo);
 
 module.exports = router;
