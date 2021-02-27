@@ -2,6 +2,12 @@
 
 var _typeorm = require('typeorm');
 
+var _UserRouter = require('./routes/UserRouter');
+
+var _UserRouter2 = _interopRequireDefault(_UserRouter);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var express = require('express');
 var bodyParser = require('body-parser');
 
@@ -20,3 +26,6 @@ app.listen(3000, function () {
 }).catch(function (error) {
     return console.error(error);
 });
+
+// Gestión de usuario
+app.use('/users', _UserRouter2.default);

@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 import {createConnection} from 'typeorm';
+import UserRouter from './routes/UserRouter';
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,5 +16,7 @@ createConnection()
 })
 .catch(error=>console.error(error))
 
+// Gestión de usuario
+app.use('/users',UserRouter);
 
 
