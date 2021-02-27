@@ -74,16 +74,28 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                     var newUserInfo = await this.find({ id: userId });
                     return newUserInfo;
                 }
+            } catch (error) {
+                return error;
             }
+        }
 
-            // async updateName(id, firstName){
-            //     const user = await this.findOne(id);
-            //     if(!user) return null;
-            //     user.firstName = firstName;
-            //     return await this.update(id, user);
-            // }
+        //Login
 
-            catch (error) {
+    }, {
+        key: "login",
+        value: async function login(username, password) {
+            try {
+                console.log("ACA");
+                // Busqueda por nombre de usuario
+                var find = await this.find({ userName: username });
+                console.log(find);
+                if (find === 'undefined' || find.length <= 0) {
+                    return "Usuario no existe";
+                } // Revisa si la contraseña es la guardada
+                else if (find[0].password !== password) {
+                        return "Constraseña incorrecta";
+                    } else return "Login OK";
+            } catch (error) {
                 return error;
             }
         }

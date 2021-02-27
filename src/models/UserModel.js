@@ -45,17 +45,29 @@ export class UserRepository extends Repository {
                 return newUserInfo;
             }
             }
-
-        // async updateName(id, firstName){
-        //     const user = await this.findOne(id);
-        //     if(!user) return null;
-        //     user.firstName = firstName;
-        //     return await this.update(id, user);
-        // }
-
-            catch (error) {
+             catch (error) {
                 return error;
             }
         }
+
+    //Login
+    async login(username, password) {
+        try {
+            console.log("ACA");
+            // Busqueda por nombre de usuario
+            const find = await this.find({userName: username});
+            console.log(find);
+            if (find === 'undefined' || find.length <= 0) {
+                return "Usuario no existe";
+            } // Revisa si la contraseña es la guardada
+            else if (find[0].password !== password) {
+                return "Constraseña incorrecta";
+            }
+            else return "Login OK";
+        }
+        catch (error) {
+            return error;
+        }
+    }
 
 }

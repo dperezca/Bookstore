@@ -28,4 +28,20 @@ UserController.updateUser = async(req,res) => {
         }
     }
 
+// Login
+UserController.login = async(req,res) => {
+    try {
+        const userRepository = new getCustomRepository(UserRepository);
+        const {body} = req;
+        const username = body.username;
+        const password = body.password;
+        console.log(username, password);
+        const login = await userRepository.login(username, password);
+        res.json(login);
+    }
+        catch(error) {
+            return error;
+        }
+    }
+
 module.exports = UserController;

@@ -34,4 +34,20 @@ UserController.updateUser = async function (req, res) {
     }
 };
 
+// Login
+UserController.login = async function (req, res) {
+    try {
+        var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
+        var body = req.body;
+
+        var username = body.username;
+        var password = body.password;
+        console.log(username, password);
+        var login = await userRepository.login(username, password);
+        res.json(login);
+    } catch (error) {
+        return error;
+    }
+};
+
 module.exports = UserController;
