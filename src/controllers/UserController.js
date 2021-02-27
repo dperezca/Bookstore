@@ -17,4 +17,15 @@ try {
     }
 }
 
+//Modificación de datos de usuario
+UserController.updateUser = async(req,res) => {
+    try {
+        const userRepository = new getCustomRepository(UserRepository);
+        const userUpdated = await userRepository.updateUser(req.params.id, req.body);
+        res.json(userUpdated)}
+        catch(error) {
+            return error;
+        }
+    }
+
 module.exports = UserController;

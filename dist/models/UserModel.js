@@ -35,7 +35,9 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
         // Registro de usuario con los datos del JSON
         value: async function createUser(userInfo) {
             try {
+                // Crea el usuario
                 var user = new _Users.User();
+                // Actualiza info con los datos de la request
                 user.userName = userInfo.username;
                 user.password = userInfo.password;
                 user.firstName = userInfo.nombre.toUpperCase();
@@ -44,6 +46,44 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                 user.rol = userInfo.rol;
                 return await this.save(user);
             } catch (error) {
+                return error;
+            }
+        }
+
+        // Modificación de datos de usuario
+
+    }, {
+        key: "updateUser",
+        value: async function updateUser(userId, userInfo) {
+            try {
+                // Encuentra el usuario con el ID que viene en la request
+                var user = await this.findOne({ id: userId });
+                // Revisa que exista
+                if (user === undefined || user.length <= 0) {
+                    // Si no existe, devuelve error
+                    return "El usuario no existe";
+                } else {
+                    // Si existe, actualiza y devuelve nuevos datos
+                    user.firstName = userInfo.firstName;
+                    user.password = userInfo.password;
+                    user.lastName = userInfo.lastName;
+                    user.email = userInfo.email;
+                    user.rol = userInfo.rol;
+                    user.userName = userInfo.userName;
+                    await this.update(userId, user);
+                    var newUserInfo = await this.find({ id: userId });
+                    return newUserInfo;
+                }
+            }
+
+            // async updateName(id, firstName){
+            //     const user = await this.findOne(id);
+            //     if(!user) return null;
+            //     user.firstName = firstName;
+            //     return await this.update(id, user);
+            // }
+
+            catch (error) {
                 return error;
             }
         }

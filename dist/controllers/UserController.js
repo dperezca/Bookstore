@@ -23,4 +23,15 @@ UserController.registerUser = async function (req, res) {
     }
 };
 
+//Modificación de datos de usuario
+UserController.updateUser = async function (req, res) {
+    try {
+        var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
+        var userUpdated = await userRepository.updateUser(req.params.id, req.body);
+        res.json(userUpdated);
+    } catch (error) {
+        return error;
+    }
+};
+
 module.exports = UserController;
