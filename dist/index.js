@@ -6,6 +6,10 @@ var _UserRouter = require('./routes/UserRouter');
 
 var _UserRouter2 = _interopRequireDefault(_UserRouter);
 
+var _ProductRouter = require('./routes/ProductRouter');
+
+var _ProductRouter2 = _interopRequireDefault(_ProductRouter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -29,3 +33,6 @@ app.listen(3000, function () {
 
 // Gestión de usuario
 app.use('/users', _UserRouter2.default);
+
+// Gestión de producto
+app.use('/products', _ProductRouter2.default);

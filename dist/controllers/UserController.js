@@ -55,7 +55,6 @@ UserController.userInfo = async function (req, res) {
     var userInfo = await userRepository.getUserInfo(req.params.id);
     var rolRepository = new _typeorm.getCustomRepository(_RolModel.RolRepository);
     var rolDesc = await rolRepository.getRolDesc(userInfo.rol);
-    console.log(rolDesc.rolDesc);
     var newUserInfo = [{ id: userInfo.id, userName: userInfo.userName, firstName: userInfo.firstName, lastName: userInfo.lastName, email: userInfo.email, rol: rolDesc.rolDesc }];
     res.json(newUserInfo);
 };
