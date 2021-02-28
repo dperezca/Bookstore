@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from "typeorm";
 import { User } from "../entities/Users";
 
+
 @EntityRepository(User)
 export class UserRepository extends Repository {
 
@@ -70,7 +71,8 @@ export class UserRepository extends Repository {
 
     async getUserInfo(idNum) {
         try {
-            const find = await this.find({id: idNum});
+            const find = await this.findOne({id: idNum});
+
             return find;
         }
         catch (error) {

@@ -2,9 +2,9 @@
 
 var _UserModel = require('../models/UserModel');
 
-var _typeorm = require('typeorm');
+var _RolModel = require('../models/RolModel');
 
-var _Users = require('../entities/Users');
+var _typeorm = require('typeorm');
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -52,9 +52,12 @@ UserController.login = async function (req, res) {
 //User Info
 UserController.userInfo = async function (req, res) {
     var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
-    console.log(req.params.id);
-    var rta = await userRepository.getUserInfo(req.params.id);
-    res.json(rta);
+    var userInfo = await userRepository.getUserInfo(req.params.id);
+    var rolRepository = new _typeorm.getCustomRepository(_RolModel.RolRepository);
+    var rolDesc = await rolRepository.getRolDesc(userInfo.rol);
+    console.log(rolDesc.rolDesc);
+    var newUserInfo = [{ id: userInfo.id, userName: userInfo.userName, firstName: userInfo.firstName, lastName: userInfo.lastName, email: userInfo.email, rol: rolDesc.rolDesc }];
+    res.json(newUserInfo);
 };
 
 module.exports = UserController;

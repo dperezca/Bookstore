@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const UserModel = require("../models/UserModel")
 import { UserRepository } from '../models/UserModel';
+import { RolRepository } from '../models/RolModel';
 import { getCustomRepository } from 'typeorm';
-import { User } from '../entities/Users';
 const UserController = {};
 
 // Registro de usuario 
@@ -46,9 +46,12 @@ UserController.login = async(req,res) => {
 //User Info
 UserController.userInfo = async(req,res) => {
     const userRepository = new getCustomRepository(UserRepository);
-    console.log(req.params.id);
-    const rta = await userRepository.getUserInfo(req.params.id);
-    res.json(rta);
+    const userInfo = await userRepository.getUserInfo(req.params.id);
+    const rolRepository = new getCustomRepository(RolRepository);
+    const rolDesc = await rolRepository.getRolDesc(userInfo.rol);
+    console.log(rolDesc.rolDesc);
+    var newUserInfo = [{id: userInfo.id, userName: userInfo.userName, firstName: userInfo.firstName, lastName: userInfo.lastName, email: userInfo.email, rol: rolDesc.rolDesc}]
+    res.json(newUserInfo);
   }
 
 module.exports = UserController;
