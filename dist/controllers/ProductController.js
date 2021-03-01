@@ -22,4 +22,30 @@ ProductController.createProduct = async function (req, res) {
     }
 };
 
+//Buscar por ID
+ProductController.findById = async function (req, res) {
+    try {
+        var productRepository = new _typeorm.getCustomRepository(_ProductModel.ProductRepository);
+        var product = await productRepository.findById(req.params.id);
+        res.json(product);
+    } catch (error) {
+        return error;
+    }
+};
+
+//Buscar por Query
+ProductController.findByQuery = async function (req, res) {
+    try {
+        var productRepository = new _typeorm.getCustomRepository(_ProductModel.ProductRepository);
+        if (Object.entries(req.query).length === 0) {
+            res.send('No hay criterios de busqueda');
+        } else {
+            var product = await productRepository.findByQuery(req.query);
+            res.json(product);
+        }
+    } catch (error) {
+        return error;
+    }
+};
+
 module.exports = ProductController;

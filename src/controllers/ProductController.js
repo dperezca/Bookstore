@@ -18,4 +18,34 @@ try {
     }
 }
 
+//Buscar por ID
+ProductController.findById = async(req,res) => {
+    try {
+        const productRepository = new getCustomRepository(ProductRepository);
+        const product = await productRepository.findById(req.params.id);
+        res.json(product)
+    }
+        catch(error) {
+            return error;
+        }
+    }
+
+ //Buscar por Query
+ ProductController.findByQuery = async(req,res) => {
+    try {
+        const productRepository = new getCustomRepository(ProductRepository);
+        if (Object.entries(req.query).length === 0 ) {
+            res.send('No hay criterios de busqueda');
+        }
+        else {
+            const product = await productRepository.findByQuery(req.query);
+            res.json(product);
+        }
+     }
+        catch(error) {
+            return error;
+        }
+    }
+
+
 module.exports = ProductController;

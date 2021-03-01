@@ -37,18 +37,59 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
             try {
                 // Crea el usuario
                 var newProduct = new _Products.Product();
-                console.log(newProduct);
-                console.log(product);
                 newProduct.seller = product.seller;
-                console.log(newProduct);
                 newProduct.category = product.category;
                 newProduct.title = product.title;
                 newProduct.author = product.author;
                 newProduct.ISBN = product.ISBN;
                 newProduct.idioma = product.idioma;
                 newProduct.estado = product.estado;
-                console.log(newProduct);
                 return await this.save(newProduct);
+            } catch (error) {
+                return error;
+            }
+        }
+    }, {
+        key: "findById",
+        value: async function findById(id) {
+            try {
+                var product = await this.find({ prodId: id });
+                if (product === undefined || product.length <= 0) {
+                    return "El producto no existe";
+                } else {
+                    return product;
+                }
+            } catch (error) {
+                return error;
+            }
+        }
+    }, {
+        key: "findByQuery",
+        value: async function findByQuery(query) {
+            try {
+                var criterio = Object.getOwnPropertyNames(query)[0];
+                var listProd;
+                switch (criterio) {
+                    case "author":
+                        listProd = await this.find({ author: (0, _typeorm.Like)("%" + query.author + "%") });
+                    case 'title':
+                        listProd = await this.find({ title: (0, _typeorm.Like)("%" + query.title + "%") });
+                    case 'seller':
+                        listProd = await this.find({ seller: (0, _typeorm.Like)("%" + query.seller + "%") });
+                    case 'category':
+                        listProd = await this.find({ category: (0, _typeorm.Like)("%" + query.category + "%") });
+                    case 'isbn':
+                        listProd = await this.find({ isbn: (0, _typeorm.Like)("%" + query.isbn + "%") });
+                    case 'estado':
+                        listProd = await this.find({ estado: (0, _typeorm.Like)("%" + query.estado + "%") });
+                    case 'idioma':
+                        listProd = await this.find({ idioma: (0, _typeorm.Like)("%" + query.idioma + "%") });
+                }
+                if (listProd.length === 0) {
+                    return "No se encontraton coincidencias";
+                } else {
+                    return listProd;
+                }
             } catch (error) {
                 return error;
             }
