@@ -9,6 +9,8 @@ var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _desc, _value
 
 var _typeorm = require("typeorm");
 
+var _Roles = require("./Roles");
+
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
@@ -54,7 +56,11 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var User = exports.User = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)("varchar"), _dec4 = (0, _typeorm.Column)("varchar", { unique: true }), _dec5 = (0, _typeorm.Column)("varchar"), _dec6 = (0, _typeorm.Column)("varchar"), _dec7 = (0, _typeorm.Column)("varchar"), _dec8 = (0, _typeorm.Column)("integer"), _dec(_class = (_class2 = function User() {
+var User = exports.User = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)("varchar"), _dec4 = (0, _typeorm.Column)("varchar", { unique: true }), _dec5 = (0, _typeorm.Column)("varchar"), _dec6 = (0, _typeorm.Column)("varchar"), _dec7 = (0, _typeorm.Column)("varchar"), _dec8 = (0, _typeorm.ManyToOne)(function () {
+    return _Roles.Rol;
+}, function (user) {
+    return user.photos;
+}), _dec(_class = (_class2 = function User() {
     _classCallCheck(this, User);
 
     _initDefineProp(this, "id", _descriptor, this);
@@ -103,6 +109,6 @@ var User = exports.User = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.P
 }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "rol", [_dec8], {
     enumerable: true,
     initializer: function initializer() {
-        return "";
+        return _Roles.Rol;
     }
 })), _class2)) || _class);

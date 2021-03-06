@@ -9,6 +9,8 @@ var _dec, _dec2, _dec3, _class, _desc, _value, _class2, _descriptor, _descriptor
 
 var _typeorm = require("typeorm");
 
+var _Users = require("./Users");
+
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {

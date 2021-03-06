@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Rol } from "./Roles";
 
 @Entity()
 export class User {
@@ -14,6 +15,6 @@ export class User {
     lastName="";
     @Column("varchar")
     email="";
-    @Column("integer")
-    rol="";
+    @ManyToOne(() => Rol, rol => rol.rolId)
+    rol= Rol;
 }
