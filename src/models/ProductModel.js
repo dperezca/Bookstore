@@ -71,4 +71,28 @@ export class ProductRepository extends Repository {
         }
     }
 
+    async updateById(id, newProductInfo) {
+        try {
+        var product = await this.findOne({prodId: id});
+        if (product === undefined || product.length <=0) {
+            return "El producto no existe";
+        } else {
+            console.log(product);
+            product.seller = newProductInfo.seller;
+            product.category = newProductInfo.category;
+            product.title = newProductInfo.title;
+            product.author = newProductInfo.author;
+            product.ISBN = newProductInfo.ISBN;
+            product.idioma = newProductInfo.idioma;
+            product.estado = newProductInfo.estado;
+            await this.update(id, product);
+            return product;
+        }
+    }
+    catch(error) {
+        return error;
+    }
+
+}
+
 }

@@ -11,6 +11,9 @@ router.get('/find/:id', ProductController.findById);
 //Buscar por query
 router.get('/find', ProductController.findByQuery);
 
+//Update
+router.put('/update/:id', ProductController.updateById);
+
 
 
 module.exports = router;

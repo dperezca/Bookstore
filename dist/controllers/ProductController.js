@@ -48,4 +48,15 @@ ProductController.findByQuery = async function (req, res) {
     }
 };
 
+//Update by ID
+ProductController.updateById = async function (req, res) {
+    try {
+        var productRepository = new _typeorm.getCustomRepository(_ProductModel.ProductRepository);
+        var productUpdated = await productRepository.updateById(req.params.id, req.body);
+        res.json(productUpdated);
+    } catch (error) {
+        return error;
+    }
+};
+
 module.exports = ProductController;

@@ -58,8 +58,8 @@ function _initializerWarningHelper(descriptor, context) {
 
 var User = exports.User = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)("varchar"), _dec4 = (0, _typeorm.Column)("varchar", { unique: true }), _dec5 = (0, _typeorm.Column)("varchar"), _dec6 = (0, _typeorm.Column)("varchar"), _dec7 = (0, _typeorm.Column)("varchar"), _dec8 = (0, _typeorm.ManyToOne)(function () {
     return _Roles.Rol;
-}, function (user) {
-    return user.photos;
+}, function (rol) {
+    return rol.rolId;
 }), _dec(_class = (_class2 = function User() {
     _classCallCheck(this, User);
 

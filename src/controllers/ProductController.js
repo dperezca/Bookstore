@@ -47,5 +47,17 @@ ProductController.findById = async(req,res) => {
         }
     }
 
+ //Update by ID
+ ProductController.updateById = async(req,res) => {
+    try {
+        const productRepository = new getCustomRepository(ProductRepository);
+        const productUpdated = await productRepository.updateById(req.params.id, req.body);
+        res.json(productUpdated)
+    }
+        catch(error) {
+            return error;
+    }
+    }
+
 
 module.exports = ProductController;
