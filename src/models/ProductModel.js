@@ -18,6 +18,7 @@ export class ProductRepository extends Repository {
         newProduct.ISBN = product.ISBN;
         newProduct.idioma = product.idioma;
         newProduct.estado = product.estado;
+        newProduct.price = product.price;
             return await this.save(newProduct);
     }
         catch (error) {
@@ -85,6 +86,7 @@ export class ProductRepository extends Repository {
             product.ISBN = newProductInfo.ISBN;
             product.idioma = newProductInfo.idioma;
             product.estado = newProductInfo.estado;
+            product.price = newProductInfo.price;
             await this.update(id, product);
             return product;
         }

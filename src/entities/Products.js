@@ -18,4 +18,7 @@ export class Product {
     idioma="";
     @Column("integer")
     estado="";
+    @Column("float")
+    price="";
+
 }

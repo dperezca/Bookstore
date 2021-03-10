@@ -44,6 +44,7 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
                 newProduct.ISBN = product.ISBN;
                 newProduct.idioma = product.idioma;
                 newProduct.estado = product.estado;
+                newProduct.price = product.price;
                 return await this.save(newProduct);
             } catch (error) {
                 return error;
@@ -98,7 +99,6 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
         key: "updateById",
         value: async function updateById(id, newProductInfo) {
             try {
-                console.log(newProductInfo);
                 var product = await this.findOne({ prodId: id });
                 if (product === undefined || product.length <= 0) {
                     return "El producto no existe";
@@ -112,7 +112,6 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
                     product.idioma = newProductInfo.idioma;
                     product.estado = newProductInfo.estado;
                     await this.update(id, product);
-                    await this.find({ prodId: id });
                     return product;
                 }
             } catch (error) {
