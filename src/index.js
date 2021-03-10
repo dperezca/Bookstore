@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 import {createConnection} from 'typeorm';
 import UserRouter from './routes/UserRouter';
 import ProductRouter from './routes/ProductRouter';
+import PurchaseRouter from './routes/PurchaseRouter';
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,5 +23,8 @@ app.use('/users',UserRouter);
 
 // Gestión de producto
 app.use('/products',ProductRouter);
+
+//Gestión de compras
+app.use('/purchase',PurchaseRouter);
 
 

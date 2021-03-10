@@ -111,6 +111,7 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
                     product.ISBN = newProductInfo.ISBN;
                     product.idioma = newProductInfo.idioma;
                     product.estado = newProductInfo.estado;
+                    product.price = newProductInfo.price;
                     await this.update(id, product);
                     return product;
                 }
