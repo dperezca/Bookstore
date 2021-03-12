@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.PurchaseRepository = undefined;
+exports.ProdOrderRepository = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -11,7 +11,9 @@ var _dec, _class;
 
 var _typeorm = require("typeorm");
 
-var _Purchase = require("../entities/Purchase");
+var _ProdOrder = require("../entities/ProdOrder");
+
+var _Products = require("../entities/Products");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19,40 +21,34 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PurchaseRepository = exports.PurchaseRepository = (_dec = (0, _typeorm.EntityRepository)(_Purchase.Purchase), _dec(_class = function (_Repository) {
-    _inherits(PurchaseRepository, _Repository);
+var ProdOrderRepository = exports.ProdOrderRepository = (_dec = (0, _typeorm.EntityRepository)(_ProdOrder.ProdOrder), _dec(_class = function (_Repository) {
+    _inherits(ProdOrderRepository, _Repository);
 
-    function PurchaseRepository() {
-        _classCallCheck(this, PurchaseRepository);
+    function ProdOrderRepository() {
+        _classCallCheck(this, ProdOrderRepository);
 
-        return _possibleConstructorReturn(this, (PurchaseRepository.__proto__ || Object.getPrototypeOf(PurchaseRepository)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (ProdOrderRepository.__proto__ || Object.getPrototypeOf(ProdOrderRepository)).apply(this, arguments));
     }
 
-    _createClass(PurchaseRepository, [{
-        key: "newPurchase",
+    _createClass(ProdOrderRepository, [{
+        key: "newOrderList",
 
 
-        // Nueva compra
-        value: async function newPurchase(purchaseInfo) {
+        // Nueva lista de productos
+        value: async function newOrderList(id, products) {
             try {
-                var purchase = new _Purchase.Purchase();
-                purchase.seller = purchaseInfo.seller;
-                purchase.buyer = purchaseInfo.buyer;
-                return await this.save(purchase);
-            } catch (error) {
-                throw error;
-            }
-        }
-    }, {
-        key: "deletePurchase",
-        value: async function deletePurchase(id) {
-            try {
-                await this.delete({ purchaseId: id });
+                for (var i = 0; i < products.products.length; i++) {
+                    var prodOrder = new _ProdOrder.ProdOrder();
+                    prodOrder.purchase = id;
+                    prodOrder.product = products.products[i].id;
+                    prodOrder.amount = products.products[i].amount;
+                    await this.save(prodOrder);
+                }
             } catch (error) {
                 throw error;
             }
         }
     }]);
 
-    return PurchaseRepository;
+    return ProdOrderRepository;
 }(_typeorm.Repository)) || _class);

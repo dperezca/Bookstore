@@ -13,7 +13,16 @@ export class PurchaseRepository extends Repository {
         purchase.buyer = purchaseInfo.buyer;
         return await this.save(purchase);}
         catch (error) {
-            return error;
+            throw error;
+        }
+    }
+
+    async deletePurchase (id) {
+        try {
+        await this.delete({purchaseId: id}) 
+        }
+        catch (error) {
+            throw error;
         }
     }
 

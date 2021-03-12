@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 import {createConnection} from 'typeorm';
 import UserRouter from './routes/UserRouter';
 import ProductRouter from './routes/ProductRouter';
-import PurchaseRouter from './routes/PurchaseRouter';
+import PurchaseRouter  from './routes/PurchaseRouter';
 
 const app = express();
 app.use(bodyParser.json());
