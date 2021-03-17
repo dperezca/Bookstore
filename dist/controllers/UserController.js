@@ -15,11 +15,13 @@ var UserController = {};
 // Registro de usuario 
 UserController.registerUser = async function (req, res) {
     try {
+        console.log("1");
         var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
+        console.log("2");
         var userCreated = await userRepository.createUser(req.body);
         res.json(userCreated);
     } catch (error) {
-        return error;
+        throw error;
     }
 };
 
@@ -53,9 +55,7 @@ UserController.login = async function (req, res) {
 UserController.userInfo = async function (req, res) {
     var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
     var userInfo = await userRepository.getUserInfo(req.params.id);
-    var rolRepository = new _typeorm.getCustomRepository(_RolModel.RolRepository);
-    var rolDesc = await rolRepository.getRolDesc(userInfo.rol);
-    var newUserInfo = [{ id: userInfo.id, userName: userInfo.userName, firstName: userInfo.firstName, lastName: userInfo.lastName, email: userInfo.email, rol: rolDesc.rolDesc }];
+    var newUserInfo = [{ id: userInfo.id, userName: userInfo.userName, firstName: userInfo.firstName, lastName: userInfo.lastName, email: userInfo.email, rol: userInfo.rol }];
     res.json(newUserInfo);
 };
 

@@ -7,7 +7,7 @@ export class RolRepository extends Repository {
     //Buscar descripción del Rol
     async getRolDesc(rolId) {
         try {
-            const rolDesc = await this.findOne({rolId: rolId});
+            const rolDesc = await this.find({rolId: rolId});
             return rolDesc;
         }
         catch (error) {

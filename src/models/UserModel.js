@@ -19,7 +19,7 @@ export class UserRepository extends Repository {
         user.rol = userInfo.rol;
         return await this.save(user);}
         catch (error) {
-            return error;
+            throw error;
         }
     }
 
@@ -47,7 +47,7 @@ export class UserRepository extends Repository {
             }
             }
              catch (error) {
-                return error;
+                throw error;
             }
         }
 
@@ -68,11 +68,9 @@ export class UserRepository extends Repository {
             return error;
         }
     }
-
     async getUserInfo(idNum) {
         try {
-            const find = await this.findOne({id: idNum});
-
+            const find = await this.findOne({id: idNum,relations: ["rol"]});
             return find;
         }
         catch (error) {

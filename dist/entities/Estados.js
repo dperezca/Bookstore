@@ -3,15 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Purchase = undefined;
+exports.Estados = undefined;
 
-var _dec, _dec2, _dec3, _dec4, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3;
+var _dec, _dec2, _dec3, _class, _desc, _value, _class2, _descriptor, _descriptor2;
 
 var _typeorm = require("typeorm");
-
-var _Users = require("./Users");
-
-var _ProdOrder = require("./ProdOrder");
 
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -58,38 +54,20 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var Purchase = exports.Purchase = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.ManyToOne)(function () {
-    return _Users.User;
-}, function (seller) {
-    return seller.id;
-}), _dec4 = (0, _typeorm.ManyToOne)(function () {
-    return _Users.User;
-}, function (buyer) {
-    return buyer.id;
-}), _dec(_class = (_class2 =
-// @OneToMany(() => ProdOrder, prodOrder => prodOrder.purchase)
-// prodOrder= ProdOrder;
-function Purchase() {
-    _classCallCheck(this, Purchase);
+var Estados = exports.Estados = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)("varchar"), _dec(_class = (_class2 = function Estados() {
+    _classCallCheck(this, Estados);
 
-    _initDefineProp(this, "purchaseId", _descriptor, this);
+    _initDefineProp(this, "id", _descriptor, this);
 
-    _initDefineProp(this, "seller", _descriptor2, this);
-
-    _initDefineProp(this, "buyer", _descriptor3, this);
-}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "purchaseId", [_dec2], {
+    _initDefineProp(this, "estadoDesc", _descriptor2, this);
+}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "id", [_dec2], {
     enumerable: true,
     initializer: function initializer() {
         return undefined;
     }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "seller", [_dec3], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "estadoDesc", [_dec3], {
     enumerable: true,
     initializer: function initializer() {
-        return _Users.User;
-    }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "buyer", [_dec4], {
-    enumerable: true,
-    initializer: function initializer() {
-        return _Users.User;
+        return "";
     }
 })), _class2)) || _class);

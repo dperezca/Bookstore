@@ -12,7 +12,7 @@ export class ProductRepository extends Repository {
         // Crea el usuario
         const newProduct = new Product();
         newProduct.seller = product.seller;
-        newProduct.category = product.category;
+        newProduct.categoria = product.category;
         newProduct.title = product.title;
         newProduct.author = product.author;
         newProduct.ISBN = product.ISBN;
@@ -22,6 +22,7 @@ export class ProductRepository extends Repository {
             return await this.save(newProduct);
     }
         catch (error) {
+            console.log(error);
             return error;
         }
     }
@@ -53,7 +54,7 @@ export class ProductRepository extends Repository {
                 case 'seller':
                 listProd = await this.find({seller: Like(`%${query.seller}%`)});
                 case 'category':
-                listProd = await this.find({category: Like(`%${query.category}%`)});
+                listProd = await this.find({categoria: Like(`%${query.category}%`)});
                 case 'isbn':
                 listProd = await this.find({isbn: Like(`%${query.isbn}%`)});
                 case 'estado':
@@ -80,7 +81,7 @@ export class ProductRepository extends Repository {
         } else {
             console.log(product);
             product.seller = newProductInfo.seller;
-            product.category = newProductInfo.category;
+            product.categoria = newProductInfo.category;
             product.title = newProductInfo.title;
             product.author = newProductInfo.author;
             product.ISBN = newProductInfo.ISBN;

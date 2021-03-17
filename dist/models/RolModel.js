@@ -35,7 +35,7 @@ var RolRepository = exports.RolRepository = (_dec = (0, _typeorm.EntityRepositor
         //Buscar descripción del Rol
         value: async function getRolDesc(rolId) {
             try {
-                var rolDesc = await this.findOne({ rolId: rolId });
+                var rolDesc = await this.find({ rolId: rolId });
                 return rolDesc;
             } catch (error) {
                 return error;

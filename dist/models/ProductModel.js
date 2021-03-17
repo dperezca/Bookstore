@@ -38,7 +38,7 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
                 // Crea el usuario
                 var newProduct = new _Products.Product();
                 newProduct.seller = product.seller;
-                newProduct.category = product.category;
+                newProduct.categoria = product.category;
                 newProduct.title = product.title;
                 newProduct.author = product.author;
                 newProduct.ISBN = product.ISBN;
@@ -47,6 +47,7 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
                 newProduct.price = product.price;
                 return await this.save(newProduct);
             } catch (error) {
+                console.log(error);
                 return error;
             }
         }
@@ -78,7 +79,7 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
                     case 'seller':
                         listProd = await this.find({ seller: (0, _typeorm.Like)("%" + query.seller + "%") });
                     case 'category':
-                        listProd = await this.find({ category: (0, _typeorm.Like)("%" + query.category + "%") });
+                        listProd = await this.find({ categoria: (0, _typeorm.Like)("%" + query.category + "%") });
                     case 'isbn':
                         listProd = await this.find({ isbn: (0, _typeorm.Like)("%" + query.isbn + "%") });
                     case 'estado':
@@ -105,7 +106,7 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
                 } else {
                     console.log(product);
                     product.seller = newProductInfo.seller;
-                    product.category = newProductInfo.category;
+                    product.categoria = newProductInfo.category;
                     product.title = newProductInfo.title;
                     product.author = newProductInfo.author;
                     product.ISBN = newProductInfo.ISBN;

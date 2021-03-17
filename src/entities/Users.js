@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
 import { Rol } from "./Roles";
+import { Purchase } from "./Purchase";
 
 @Entity()
 export class User {
@@ -17,4 +18,6 @@ export class User {
     email="";
     @ManyToOne(() => Rol, rol => rol.rolId)
     rol= Rol;
+    // @OneToMany(() => Purchase, purchase => purchase.seller)
+    // purchase= Purchase;
 }

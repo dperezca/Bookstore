@@ -11,6 +11,8 @@ var _typeorm = require("typeorm");
 
 var _Roles = require("./Roles");
 
+var _Purchase = require("./Purchase");
+
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
@@ -60,7 +62,10 @@ var User = exports.User = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.P
     return _Roles.Rol;
 }, function (rol) {
     return rol.rolId;
-}), _dec(_class = (_class2 = function User() {
+}), _dec(_class = (_class2 =
+// @OneToMany(() => Purchase, purchase => purchase.seller)
+// purchase= Purchase;
+function User() {
     _classCallCheck(this, User);
 
     _initDefineProp(this, "id", _descriptor, this);

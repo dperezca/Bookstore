@@ -46,7 +46,7 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                 user.rol = userInfo.rol;
                 return await this.save(user);
             } catch (error) {
-                return error;
+                throw error;
             }
         }
 
@@ -75,7 +75,7 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                     return newUserInfo;
                 }
             } catch (error) {
-                return error;
+                throw error;
             }
         }
 
@@ -101,8 +101,7 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
         key: "getUserInfo",
         value: async function getUserInfo(idNum) {
             try {
-                var find = await this.findOne({ id: idNum });
-
+                var find = await this.findOne({ id: idNum, relations: ["rol"] });
                 return find;
             } catch (error) {
                 return error;

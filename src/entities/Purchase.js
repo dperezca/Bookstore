@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
 import { User } from "./Users";
+import { ProdOrder } from "./ProdOrder";
 
 @Entity()
 export class Purchase {
@@ -9,4 +10,6 @@ export class Purchase {
     seller= User;
     @ManyToOne(() => User, buyer => buyer.id)
     buyer= User;
+    // @OneToMany(() => ProdOrder, prodOrder => prodOrder.purchase)
+    // prodOrder= ProdOrder;
 }

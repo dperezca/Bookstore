@@ -8,20 +8,32 @@ const PurchaseController = {};
 
 // Creación de un nuevo product
 PurchaseController.newPurchase = async(req,res) => {
-try {
-    const purchaseRepository = new getCustomRepository(PurchaseRepository);
-    const purchase = await purchaseRepository.newPurchase(req.body);
-    try {const prodOrderRepository = new getCustomRepository(ProdOrderRepository);
-    const prodOrder = await prodOrderRepository.newOrderList(purchase.purchaseId, req.body);
-    res.json(req.body)}
-    catch(error) {
-        await purchaseRepository.deletePurchase(purchase.purchaseId);
-        res.status(200).json(error);
+    try {
+        const purchaseRepository = new getCustomRepository(PurchaseRepository);
+        const purchase = await purchaseRepository.newPurchase(req.body);
+        try {const prodOrderRepository = new getCustomRepository(ProdOrderRepository);
+        const prodOrder = await prodOrderRepository.newOrderList(purchase.purchaseId, req.body);
+        res.json(req.body)}
+        catch(error) {
+            await purchaseRepository.deletePurchase(purchase.purchaseId);
+            res.status(200).json(error);
+        }
     }
-}
-    catch(error) {
-        res.status(200).json(error);
+        catch(error) {
+            res.status(200).json(error);
+        }
     }
-}
 
+    // Creación de un nuevo product
+PurchaseController.showPurchases = async(req,res) => {
+    try {
+        const purchaseRepository = new getCustomRepository(PurchaseRepository);
+        const allPurchases = await purchaseRepository.findAll();
+        console.log(allPurchases);
+        res.json(allPurchases);
+    }
+        catch(error) {
+            res.status(200).json(error);
+        }
+    }
 module.exports = PurchaseController;

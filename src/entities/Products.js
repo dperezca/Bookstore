@@ -1,4 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
+import {ProdOrder} from './ProdOrder'
+import {Categorias} from './Categorias'
+import {Idiomas} from './Idiomas'
+import {Estados} from './Estados'
 
 @Entity()
 export class Product {
@@ -6,19 +10,21 @@ export class Product {
     prodId = undefined;
     @Column("integer")
     seller="";
-    @Column("integer")
-    category="";
+    @ManyToOne(() => Categorias, categoria => categoria.id)
+    categoria= Categorias;
     @Column("varchar")
     title="";
     @Column("varchar")
     author="";
     @Column("varchar", { nullable: true })
     ISBN= "";
-    @Column("integer")
-    idioma="";
-    @Column("integer")
-    estado="";
+    @ManyToOne(() => Idiomas, idioma => idioma.cod)
+    idioma= Idiomas;
+    @ManyToOne(() => Estados, estado => estado.estadoId)
+    estado= Estados;
     @Column("float")
     price="";
+   // @OneToMany(() => ProdOrder, prodOrder => prodOrder.product)
+   // prodOrder= ProdOrder;
 
 }
