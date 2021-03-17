@@ -38,7 +38,7 @@ UserController.login = async(req,res) => {
         const username = body.username;
         const password = body.password;
         const login = await userRepository.login(username, password);
-        res.json(login);
+        res.status(200).send({token: login});
     }
         catch(error) {
             return error;

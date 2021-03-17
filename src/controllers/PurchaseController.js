@@ -9,11 +9,14 @@ const PurchaseController = {};
 // Creación de un nuevo product
 PurchaseController.newPurchase = async(req,res) => {
     try {
+        // Genero una nueva orden
         const purchaseRepository = new getCustomRepository(PurchaseRepository);
         const purchase = await purchaseRepository.newPurchase(req.body);
+        // Con el id de la orden, guardo los productos en la tabla de prod_orden
         try {const prodOrderRepository = new getCustomRepository(ProdOrderRepository);
         const prodOrder = await prodOrderRepository.newOrderList(purchase.purchaseId, req.body);
         res.json(req.body)}
+        // Si hay errores guardando los productos, me borra la compra y me devuelve error
         catch(error) {
             await purchaseRepository.deletePurchase(purchase.purchaseId);
             res.status(200).json(error);

@@ -1,5 +1,6 @@
 import { EntityRepository, Repository } from "typeorm";
 import { User } from "../entities/Users";
+const service = require('../../services.js');
 
 
 @EntityRepository(User)
@@ -17,7 +18,7 @@ export class UserRepository extends Repository {
         user.lastName = userInfo.apellido.toUpperCase();
         user.email = userInfo.email;
         user.rol = userInfo.rol;
-        return await this.save(user);}
+        return await this.save(user)}
         catch (error) {
             throw error;
         }
@@ -62,7 +63,9 @@ export class UserRepository extends Repository {
             else if (find[0].password !== password) {
                 return "Constraseña incorrecta";
             }
-            else return "Login OK";
+            else {
+                const token = service.createToken(find[0].id);
+                return token;}
         }
         catch (error) {
             return error;

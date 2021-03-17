@@ -19,6 +19,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var service = require('../../services.js');
+
 var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityRepository)(_Users.User), _dec(_class = function (_Repository) {
     _inherits(UserRepository, _Repository);
 
@@ -92,7 +94,10 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                 } // Revisa si la contraseña es la guardada
                 else if (find[0].password !== password) {
                         return "Constraseña incorrecta";
-                    } else return "Login OK";
+                    } else {
+                        var token = service.createToken(find[0].id);
+                        return token;
+                    }
             } catch (error) {
                 return error;
             }
