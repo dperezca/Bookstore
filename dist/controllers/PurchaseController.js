@@ -15,13 +15,17 @@ var PurchaseController = {};
 // Creación de un nuevo product
 PurchaseController.newPurchase = async function (req, res) {
     try {
+        // Genero una nueva orden
         var purchaseRepository = new _typeorm.getCustomRepository(_PurchaseModel.PurchaseRepository);
         var purchase = await purchaseRepository.newPurchase(req.body);
+        // Con el id de la orden, guardo los productos en la tabla de prod_orden
         try {
             var prodOrderRepository = new _typeorm.getCustomRepository(_ProdOrder.ProdOrderRepository);
             var prodOrder = await prodOrderRepository.newOrderList(purchase.purchaseId, req.body);
             res.json(req.body);
-        } catch (error) {
+        }
+        // Si hay errores guardando los productos, me borra la compra y me devuelve error
+        catch (error) {
             await purchaseRepository.deletePurchase(purchase.purchaseId);
             res.status(200).json(error);
         }

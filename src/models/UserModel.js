@@ -56,7 +56,7 @@ export class UserRepository extends Repository {
     async login(username, password) {
         try {
             // Busqueda por nombre de usuario
-            const find = await this.find({userName: username});
+            const find = await this.find({where: {userName: username}, relations: ["rol"]});
             if (find === 'undefined' || find.length <= 0) {
                 return "Usuario no existe";
             } // Revisa si la contraseña es la guardada
@@ -64,7 +64,7 @@ export class UserRepository extends Repository {
                 return "Constraseña incorrecta";
             }
             else {
-                const token = service.createToken(find[0].id);
+                const token = service.createToken(find[0].id, find[0].rol.rolId);
                 return token;}
         }
         catch (error) {

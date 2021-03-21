@@ -88,14 +88,14 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
         value: async function login(username, password) {
             try {
                 // Busqueda por nombre de usuario
-                var find = await this.find({ userName: username });
+                var find = await this.find({ where: { userName: username }, relations: ["rol"] });
                 if (find === 'undefined' || find.length <= 0) {
                     return "Usuario no existe";
                 } // Revisa si la contraseña es la guardada
                 else if (find[0].password !== password) {
                         return "Constraseña incorrecta";
                     } else {
-                        var token = service.createToken(find[0].id);
+                        var token = service.createToken(find[0].id, find[0].rol.rolId);
                         return token;
                     }
             } catch (error) {
