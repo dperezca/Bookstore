@@ -40,13 +40,13 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                 // Crea el usuario
                 var user = new _Users.User();
                 // Actualiza info con los datos de la request
-                user.userName = userInfo.username;
-                user.password = userInfo.password;
-                user.firstName = userInfo.nombre.toUpperCase();
-                user.lastName = userInfo.apellido.toUpperCase();
-                user.email = userInfo.email;
-                user.rol = userInfo.rol;
-                return await this.save(user);
+                // user.userName = userInfo.username;
+                // user.password = userInfo.password;
+                // user.firstName = userInfo.nombre.toUpperCase();
+                // user.lastName = userInfo.apellido.toUpperCase();
+                // user.email = userInfo.email;
+                // user.rol = userInfo.rol;
+                return await this.save(userInfo);
             } catch (error) {
                 throw error;
             }

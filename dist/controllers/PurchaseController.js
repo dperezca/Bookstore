@@ -39,7 +39,6 @@ PurchaseController.showPurchases = async function (req, res) {
     try {
         var purchaseRepository = new _typeorm.getCustomRepository(_PurchaseModel.PurchaseRepository);
         var allPurchases = await purchaseRepository.findAll();
-        console.log(allPurchases);
         res.json(allPurchases);
     } catch (error) {
         res.status(200).json(error);

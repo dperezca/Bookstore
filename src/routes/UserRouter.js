@@ -15,6 +15,6 @@ router.put('/:id', middleware.ensureAuthenticated, UserController.updateUser);
 router.get('/login/', UserController.login);
 
 // Ver datos de usuario
-router.get('/find/:id', [middleware.ensureAuthenticated, middleware.ensureAuthenticatedVend([1,3])], UserController.userInfo);
+router.get('/find/:id', [middleware.ensureAuthenticated, middleware.ensureActiveUserInfo()], UserController.userInfo);
 
 module.exports = router;

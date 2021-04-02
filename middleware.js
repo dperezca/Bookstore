@@ -20,12 +20,12 @@ exports.ensureAuthenticated = function(req, res, next) {
   }
   req.user = payload.sub;
   req.rol = payload.rol;
-  console.log("rol",payload)
   next();
 }
 
 exports.ensureAuthenticatedVend = function(roles) {
   return function(req, res, next) {
+    console.log("aca");
     console.log(roles.length);
     console.log(req.rol);
      for (var i = 0; i < roles.length; i++) {
@@ -49,4 +49,15 @@ exports.ensureAuthenticatedVend = function(roles) {
 }
 
 
+}
+
+exports.ensureActiveUserInfo = function() {
+  return function(req,res,next) {
+     // Con la información del TOKEN controla que el usuario sea ADMIN o sea pida la información del usuario logueado
+    if (req.rol === 1 || req.user == req.params.id) {
+      next();
+    } else {
+      res.status(401).send("No puede acceder a la información de otro usuario");
+    }
+  }
 }

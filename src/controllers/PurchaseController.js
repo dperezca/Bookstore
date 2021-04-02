@@ -32,7 +32,6 @@ PurchaseController.showPurchases = async(req,res) => {
     try {
         const purchaseRepository = new getCustomRepository(PurchaseRepository);
         const allPurchases = await purchaseRepository.findAll();
-        console.log(allPurchases);
         res.json(allPurchases);
     }
         catch(error) {

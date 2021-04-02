@@ -1,6 +1,8 @@
 import { EntityRepository, getConnection, Repository } from "typeorm";
 import { Purchase } from "../entities/Purchase";
 import {getRepository} from "typeorm";
+import { UserRepository } from "./UserModel";
+import { User } from "../entities/Users";
 
 
 @EntityRepository(Purchase)
@@ -29,7 +31,7 @@ export class PurchaseRepository extends Repository {
 
     async findAll () {
         try {
-        const list = await this.find() ;
+        const list = await this.find({relations: ["buyer", "seller", "prodOrder"]}) ;
         // const newList = [];
         // console.log(list[0].seller.id);
         // for (var i = 0; i<list.length - 1; i++) {

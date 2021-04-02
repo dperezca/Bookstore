@@ -11,6 +11,6 @@ export class Purchase {
     seller= User;
     @ManyToOne(() => User, buyer => buyer.id, {eager: true})
     buyer= User;
-   //  @OneToMany(() => ProdOrder, prodOrder => prodOrder.purchase)
-    //prodOrder= ProdOrder[];
+     @OneToMany(() => ProdOrder, prodOrder => prodOrder.purchase)
+   prodOrder= ProdOrder;
 }
