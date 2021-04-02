@@ -23,31 +23,6 @@ exports.ensureAuthenticated = function(req, res, next) {
   next();
 }
 
-exports.ensureAuthenticatedVend = function(roles) {
-  return function(req, res, next) {
-     for (var i = 0; i < roles.length; i++) {
-       if (req.rol == roles[i]) {
-         console.log("ok");
-         console.log(req.rol)
-       }
-       console.log(roles[i]);
-     }
-  // TO DO: Comprobar el rol contra el array de roles que tenemos en la funcion principal
-    // if(payload.rol === 3 || 1) {
-    //   req.user = payload.sub;
-    //   next();
-    // }
-    // else {
-    //   return res
-    //   .status(401)
-    //   .send({message: "No tiene acceso, debe ser vendedor"});
-    // }
-    next();
-}
-
-
-}
-
 exports.ensureActiveUserInfo = function() {
   return function(req,res,next) {
      // Con la información del TOKEN controla que el usuario sea ADMIN o sea pida la información del usuario logueado
@@ -56,5 +31,18 @@ exports.ensureActiveUserInfo = function() {
     } else {
       res.status(401).send("No puede acceder a la información de otro usuario");
     }
+  }
+}
+
+exports.ensureOnlySomeRoles = function(roles) {
+  return function(req,res,next) {
+    const validar = roles.find(rol => rol == req.rol);
+    if (validar) {
+      console.log("Usuario con permiso");
+      next()
+    } else {
+    console.log("El rol del usuario no le permite realizar la acción");
+    res.status(401).send("El rol del usuario no le permite realizar la acción");}
+   
   }
 }

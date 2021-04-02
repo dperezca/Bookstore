@@ -63,7 +63,6 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                 var user = await this.findOne({ id: userId });
                 return user;
             } catch (error) {
-                console.log(error);
                 throw error;
             }
         }

@@ -9,6 +9,7 @@ const ProductController = {};
 // Creación de un nuevo product
 ProductController.createProduct = async(req,res) => {
 try {
+    console.log("Creando producto");
     const productRepository = new getCustomRepository(ProductRepository);
     const product = await productRepository.createProduct(req.body);
     res.json(product)
