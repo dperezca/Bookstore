@@ -9,7 +9,7 @@ const middleware = require('../../middleware');
 router.post('/', UserController.registerUser);
 
 // Modificación de datos de usuario
-router.put('/:id', middleware.ensureAuthenticated, UserController.updateUser);
+router.put('/:id', [middleware.ensureAuthenticated, middleware.ensureActiveUserInfo()], UserController.updateUser);
 
 // Login
 router.get('/login/', UserController.login);

@@ -55,25 +55,15 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
         key: "updateUser",
         value: async function updateUser(userId, userInfo) {
             try {
-                // Encuentra el usuario con el ID que viene en la request
-                var user = await this.findOne({ id: userId });
-                // Revisa que exista
-                if (user === undefined || user.length <= 0) {
-                    // Si no existe, devuelve error
-                    return "El usuario no existe";
-                } else {
-                    // Si existe, actualiza y devuelve nuevos datos
-                    user.firstName = userInfo.firstName;
-                    user.password = userInfo.password;
-                    user.lastName = userInfo.lastName;
-                    user.email = userInfo.email;
-                    user.rol = userInfo.rol;
-                    user.userName = userInfo.userName;
-                    await this.update(userId, user);
-                    var newUserInfo = await this.find({ id: userId });
-                    return newUserInfo;
+                // Si lo que modifica es la password, la hashea
+                if (userInfo.password) {
+                    userInfo.password = await bcrypt.hash(userInfo.password, 2);
                 }
+                await this.update(userId, userInfo);
+                var user = await this.findOne({ id: userId });
+                return user;
             } catch (error) {
+                console.log(error);
                 throw error;
             }
         }
@@ -86,12 +76,11 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
             try {
                 // Busqueda por nombre de usuario
                 var find = await this.find({ where: { userName: username }, relations: ["rol"] });
-                var valida = await bcrypt.compare(password, find[0].password);
-                console.log(valida);
+                var passwordValida = await bcrypt.compare(password, find[0].password);
                 if (find === 'undefined' || find.length <= 0) {
                     return "Usuario no existe";
                 } // Revisa si la contraseña es la guardada
-                else if (!valida) {
+                else if (!passwordValida) {
                         return "Constraseña incorrecta";
                     } else {
                         var token = service.createToken(find[0].id, find[0].rol.rolId);

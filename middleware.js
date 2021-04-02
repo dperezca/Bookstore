@@ -25,9 +25,6 @@ exports.ensureAuthenticated = function(req, res, next) {
 
 exports.ensureAuthenticatedVend = function(roles) {
   return function(req, res, next) {
-    console.log("aca");
-    console.log(roles.length);
-    console.log(req.rol);
      for (var i = 0; i < roles.length; i++) {
        if (req.rol == roles[i]) {
          console.log("ok");

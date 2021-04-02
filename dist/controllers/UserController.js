@@ -32,7 +32,7 @@ UserController.updateUser = async function (req, res) {
             var userUpdated = await userRepository.updateUser(req.params.id, req.body);
             res.json(userUpdated);
         } catch (error) {
-            return error;
+            res.send(error);
         }
     }
 };

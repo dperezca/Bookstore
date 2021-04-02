@@ -26,7 +26,7 @@ UserController.updateUser = async(req,res) => {{
         const userUpdated = await userRepository.updateUser(req.params.id, req.body);
         res.json(userUpdated)}
         catch(error) {
-            return error;
+            res.send(error);
         }
 }
 }

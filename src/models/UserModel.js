@@ -25,25 +25,12 @@ export class UserRepository extends Repository {
     // Modificación de datos de usuario
         async updateUser(userId, userInfo) {
             try {
-            // Encuentra el usuario con el ID que viene en la request
+            // Si lo que modifica es la password, la hashea
+            if (userInfo.password) {
+                userInfo.password = await bcrypt.hash(userInfo.password,2);} 
+            await this.update(userId, userInfo);
             const user = await this.findOne({id: userId});
-            // Revisa que exista
-            if (user === undefined || user.length <=0) {
-                // Si no existe, devuelve error
-                return "El usuario no existe";
-            }
-             else {
-                // Si existe, actualiza y devuelve nuevos datos
-                user.firstName = userInfo.firstName;
-                user.password = userInfo.password;
-                user.lastName = userInfo.lastName;
-                user.email = userInfo.email;
-                user.rol = userInfo.rol;
-                user.userName = userInfo.userName;
-                await this.update(userId, user);
-                const newUserInfo = await this.find({id: userId});
-                return newUserInfo;
-            }
+            return user;
             }
              catch (error) {
                 throw error;
