@@ -11,11 +11,11 @@ ProductController.createProduct = async(req,res) => {
 try {
     console.log("Creando producto");
     const productRepository = new getCustomRepository(ProductRepository);
-    const product = await productRepository.createProduct(req.body);
-    res.json(product)
+    const product = await productRepository.createProduct(req.body, req.user);
+    res.status(200).send(product)
 }
     catch(error) {
-        return error;
+    res.status(201).send(error);
     }
 }
 

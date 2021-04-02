@@ -81,7 +81,7 @@ var Purchase = exports.Purchase = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _t
 
     _initDefineProp(this, "purchaseId", _descriptor, this);
 
-    _initDefineProp(this, "seller", _descriptor2, this);
+    _initDefineProp(this, "created", _descriptor2, this);
 
     _initDefineProp(this, "buyer", _descriptor3, this);
 
@@ -91,7 +91,7 @@ var Purchase = exports.Purchase = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _t
     initializer: function initializer() {
         return undefined;
     }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "seller", [_dec3], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "created", [_dec3], {
     enumerable: true,
     initializer: function initializer() {
         return _Users.User;

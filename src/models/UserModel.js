@@ -13,9 +13,7 @@ export class UserRepository extends Repository {
         try {
         // Crea el usuario
         const user = new User();
-        console.log(userInfo);
         userInfo.password = await bcrypt.hash(userInfo.password,2);
-        console.log(userInfo);
         return await this.save(userInfo)}
         catch (error) {
         throw error;
@@ -29,7 +27,7 @@ export class UserRepository extends Repository {
             if (userInfo.password) {
                 userInfo.password = await bcrypt.hash(userInfo.password,2);} 
             await this.update(userId, userInfo);
-            const user = await this.findOne({id: userId});
+            const user = await this.find({ where: {id: userId}, select: ["firstName", "lastName", "userName", "email"], relations: ["rol"] });
             return user;
             }
              catch (error) {
@@ -59,7 +57,7 @@ export class UserRepository extends Repository {
     }
     async getUserInfo(idNum) {
         try {
-             const find = await this.findOne({where: {id: idNum},relations: ["rol"]});
+            const find = this.find({ where: {id: idNum}, select: ["firstName", "lastName", "userName", "email"], relations: ["rol"] });
             return find;
         }
         catch (error) {

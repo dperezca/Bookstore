@@ -17,6 +17,8 @@ var _Idiomas = require('./Idiomas');
 
 var _Estados = require('./Estados');
 
+var _Users = require('./Users');
+
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
@@ -62,19 +64,23 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)("integer"), _dec4 = (0, _typeorm.ManyToOne)(function () {
+var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.ManyToOne)(function () {
+    return _Users.User;
+}, function (seller) {
+    return seller.id;
+}, { eager: true }), _dec4 = (0, _typeorm.ManyToOne)(function () {
     return _Categorias.Categorias;
 }, function (categoria) {
     return categoria.id;
-}), _dec5 = (0, _typeorm.Column)("varchar"), _dec6 = (0, _typeorm.Column)("varchar"), _dec7 = (0, _typeorm.Column)("varchar", { nullable: true }), _dec8 = (0, _typeorm.ManyToOne)(function () {
+}, { nullable: false }), _dec5 = (0, _typeorm.Column)("varchar", { nullable: false }), _dec6 = (0, _typeorm.Column)("varchar", { nullable: false }), _dec7 = (0, _typeorm.Column)("varchar", { nullable: true }), _dec8 = (0, _typeorm.ManyToOne)(function () {
     return _Idiomas.Idiomas;
 }, function (idioma) {
     return idioma.cod;
-}), _dec9 = (0, _typeorm.ManyToOne)(function () {
+}, { nullable: false }), _dec9 = (0, _typeorm.ManyToOne)(function () {
     return _Estados.Estados;
 }, function (estado) {
     return estado.estadoId;
-}), _dec10 = (0, _typeorm.Column)("float"), _dec11 = (0, _typeorm.OneToMany)(function () {
+}, { nullable: false }), _dec10 = (0, _typeorm.Column)("float", { nullable: false }), _dec11 = (0, _typeorm.OneToMany)(function () {
     return _ProdOrder.ProdOrder;
 }, function (prodOrder) {
     return prodOrder.product;
@@ -83,7 +89,7 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
 
     _initDefineProp(this, 'prodId', _descriptor, this);
 
-    _initDefineProp(this, 'seller', _descriptor2, this);
+    _initDefineProp(this, 'created', _descriptor2, this);
 
     _initDefineProp(this, 'categoria', _descriptor3, this);
 
@@ -105,10 +111,10 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
     initializer: function initializer() {
         return undefined;
     }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, 'seller', [_dec3], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, 'created', [_dec3], {
     enumerable: true,
     initializer: function initializer() {
-        return "";
+        return _Users.User;
     }
 }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, 'categoria', [_dec4], {
     enumerable: true,

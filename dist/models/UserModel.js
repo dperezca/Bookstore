@@ -40,9 +40,7 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
             try {
                 // Crea el usuario
                 var user = new _Users.User();
-                console.log(userInfo);
                 userInfo.password = await bcrypt.hash(userInfo.password, 2);
-                console.log(userInfo);
                 return await this.save(userInfo);
             } catch (error) {
                 throw error;
@@ -60,7 +58,7 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                     userInfo.password = await bcrypt.hash(userInfo.password, 2);
                 }
                 await this.update(userId, userInfo);
-                var user = await this.findOne({ id: userId });
+                var user = await this.find({ where: { id: userId }, select: ["firstName", "lastName", "userName", "email"], relations: ["rol"] });
                 return user;
             } catch (error) {
                 throw error;
@@ -93,7 +91,7 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
         key: "getUserInfo",
         value: async function getUserInfo(idNum) {
             try {
-                var find = await this.findOne({ where: { id: idNum }, relations: ["rol"] });
+                var find = this.find({ where: { id: idNum }, select: ["firstName", "lastName", "userName", "email"], relations: ["rol"] });
                 return find;
             } catch (error) {
                 return error;

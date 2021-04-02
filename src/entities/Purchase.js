@@ -8,7 +8,7 @@ export class Purchase {
     @PrimaryGeneratedColumn()
     purchaseId = undefined;
     @ManyToOne(() => User, seller => seller.id, {eager: true})
-    seller= User;
+    created= User;
     @ManyToOne(() => User, buyer => buyer.id, {eager: true})
     buyer= User;
      @OneToMany(() => ProdOrder, prodOrder => prodOrder.purchase)

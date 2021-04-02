@@ -30,32 +30,21 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
 
     _createClass(ProductRepository, [{
         key: "createProduct",
-
-
-        // Registro de usuario con los datos del JSON
-        value: async function createProduct(product) {
+        value: async function createProduct(product, user) {
             try {
-                // Crea el usuario
+                // Crea el producto
                 var newProduct = new _Products.Product();
-                newProduct.seller = product.seller;
-                newProduct.categoria = product.category;
-                newProduct.title = product.title;
-                newProduct.author = product.author;
-                newProduct.ISBN = product.ISBN;
-                newProduct.idioma = product.idioma;
-                newProduct.estado = product.estado;
-                newProduct.price = product.price;
-                newProduct.prodOrder = [];
-                return await this.save(newProduct);
+                product.created = user;
+                return await this.save(product);
             } catch (error) {
-                console.log(error);
-                return error;
+                throw error;
             }
         }
     }, {
         key: "findById",
         value: async function findById(id) {
             try {
+                console.log(id);
                 var product = await this.find({ prodId: id });
                 if (product === undefined || product.length <= 0) {
                     return "El producto no existe";
@@ -105,16 +94,7 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
                 if (product === undefined || product.length <= 0) {
                     return "El producto no existe";
                 } else {
-                    console.log(product);
-                    product.seller = newProductInfo.seller;
-                    product.categoria = newProductInfo.category;
-                    product.title = newProductInfo.title;
-                    product.author = newProductInfo.author;
-                    product.ISBN = newProductInfo.ISBN;
-                    product.idioma = newProductInfo.idioma;
-                    product.estado = newProductInfo.estado;
-                    product.price = newProductInfo.price;
-                    await this.update(id, product);
+                    await this.update(id, newProductInfo);
                     return product;
                 }
             } catch (error) {

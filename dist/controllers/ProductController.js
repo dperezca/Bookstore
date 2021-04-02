@@ -16,10 +16,10 @@ ProductController.createProduct = async function (req, res) {
     try {
         console.log("Creando producto");
         var productRepository = new _typeorm.getCustomRepository(_ProductModel.ProductRepository);
-        var product = await productRepository.createProduct(req.body);
-        res.json(product);
+        var product = await productRepository.createProduct(req.body, req.user);
+        res.status(200).send(product);
     } catch (error) {
-        return error;
+        res.status(201).send(error);
     }
 };
 
