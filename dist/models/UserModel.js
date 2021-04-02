@@ -20,6 +20,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var service = require('../../services.js');
+var bcrypt = require("bcryptjs");
 
 var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityRepository)(_Users.User), _dec(_class = function (_Repository) {
     _inherits(UserRepository, _Repository);
@@ -39,13 +40,9 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
             try {
                 // Crea el usuario
                 var user = new _Users.User();
-                // Actualiza info con los datos de la request
-                // user.userName = userInfo.username;
-                // user.password = userInfo.password;
-                // user.firstName = userInfo.nombre.toUpperCase();
-                // user.lastName = userInfo.apellido.toUpperCase();
-                // user.email = userInfo.email;
-                // user.rol = userInfo.rol;
+                console.log(userInfo);
+                userInfo.password = await bcrypt.hash(userInfo.password, 2);
+                console.log(userInfo);
                 return await this.save(userInfo);
             } catch (error) {
                 throw error;
@@ -89,10 +86,12 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
             try {
                 // Busqueda por nombre de usuario
                 var find = await this.find({ where: { userName: username }, relations: ["rol"] });
+                var valida = await bcrypt.compare(password, find[0].password);
+                console.log(valida);
                 if (find === 'undefined' || find.length <= 0) {
                     return "Usuario no existe";
                 } // Revisa si la contraseña es la guardada
-                else if (find[0].password !== password) {
+                else if (!valida) {
                         return "Constraseña incorrecta";
                     } else {
                         var token = service.createToken(find[0].id, find[0].rol.rolId);

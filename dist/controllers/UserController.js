@@ -53,7 +53,6 @@ UserController.login = async function (req, res) {
 
 //User Info
 UserController.userInfo = async function (req, res) {
-    console.log("llego aca");
     var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
     var userInfo = await userRepository.getUserInfo(req.params.id);
     var newUserInfo = [{ id: userInfo.id, userName: userInfo.userName, firstName: userInfo.firstName, lastName: userInfo.lastName, email: userInfo.email, rol: userInfo.rol }];

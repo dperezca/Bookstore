@@ -1,6 +1,8 @@
 import { EntityRepository, Repository } from "typeorm";
 import { User } from "../entities/Users";
 const service = require('../../services.js');
+const bcrypt = require("bcryptjs");
+
 
 
 @EntityRepository(User)
@@ -11,13 +13,9 @@ export class UserRepository extends Repository {
         try {
         // Crea el usuario
         const user = new User();
-        // Actualiza info con los datos de la request
-        // user.userName = userInfo.username;
-        // user.password = userInfo.password;
-        // user.firstName = userInfo.nombre.toUpperCase();
-        // user.lastName = userInfo.apellido.toUpperCase();
-        // user.email = userInfo.email;
-        // user.rol = userInfo.rol;
+        console.log(userInfo);
+        userInfo.password = await bcrypt.hash(userInfo.password,2);
+        console.log(userInfo);
         return await this.save(userInfo)}
         catch (error) {
         throw error;
@@ -57,10 +55,11 @@ export class UserRepository extends Repository {
         try {
             // Busqueda por nombre de usuario
             const find = await this.find({where: {userName: username}, relations: ["rol"]});
+            const passwordValida = await bcrypt.compare(password,find[0].password);
             if (find === 'undefined' || find.length <= 0) {
                 return "Usuario no existe";
             } // Revisa si la contraseña es la guardada
-            else if (find[0].password !== password) {
+            else if (!passwordValida) {
                 return "Constraseña incorrecta";
             }
             else {
