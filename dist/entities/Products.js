@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Product = undefined;
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10;
 
 var _typeorm = require('typeorm');
 
@@ -74,11 +74,11 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
     return _Estados.Estados;
 }, function (estado) {
     return estado.estadoId;
-}), _dec10 = (0, _typeorm.Column)("float"), _dec(_class = (_class2 =
-// @OneToMany(() => ProdOrder, prodOrder => prodOrder.product)
-// prodOrder= ProdOrder;
-
-function Product() {
+}), _dec10 = (0, _typeorm.Column)("float"), _dec11 = (0, _typeorm.OneToMany)(function () {
+    return _ProdOrder.ProdOrder;
+}, function (prodOrder) {
+    return prodOrder.product;
+}), _dec(_class = (_class2 = function Product() {
     _classCallCheck(this, Product);
 
     _initDefineProp(this, 'prodId', _descriptor, this);
@@ -98,6 +98,8 @@ function Product() {
     _initDefineProp(this, 'estado', _descriptor8, this);
 
     _initDefineProp(this, 'price', _descriptor9, this);
+
+    _initDefineProp(this, 'prodOrder', _descriptor10, this);
 }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'prodId', [_dec2], {
     enumerable: true,
     initializer: function initializer() {
@@ -142,5 +144,10 @@ function Product() {
     enumerable: true,
     initializer: function initializer() {
         return "";
+    }
+}), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, 'prodOrder', [_dec11], {
+    enumerable: true,
+    initializer: function initializer() {
+        return _ProdOrder.ProdOrder;
     }
 })), _class2)) || _class);

@@ -13,6 +13,12 @@ var _Users = require("./Users");
 
 var _ProdOrder = require("./ProdOrder");
 
+var _ProductRouter = require("../routes/ProductRouter");
+
+var _ProductRouter2 = _interopRequireDefault(_ProductRouter);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
@@ -62,13 +68,13 @@ var Purchase = exports.Purchase = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _t
     return _Users.User;
 }, function (seller) {
     return seller.id;
-}), _dec4 = (0, _typeorm.ManyToOne)(function () {
+}, { eager: true }), _dec4 = (0, _typeorm.ManyToOne)(function () {
     return _Users.User;
 }, function (buyer) {
     return buyer.id;
-}), _dec(_class = (_class2 =
-// @OneToMany(() => ProdOrder, prodOrder => prodOrder.purchase)
-// prodOrder= ProdOrder;
+}, { eager: true }), _dec(_class = (_class2 =
+//  @OneToMany(() => ProdOrder, prodOrder => prodOrder.purchase)
+//prodOrder= ProdOrder[];
 function Purchase() {
     _classCallCheck(this, Purchase);
 

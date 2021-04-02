@@ -106,7 +106,7 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
         key: "getUserInfo",
         value: async function getUserInfo(idNum) {
             try {
-                var find = await this.findOne({ id: idNum, relations: ["rol"] });
+                var find = await this.findOne({ where: { id: idNum }, relations: ["rol"] });
                 return find;
             } catch (error) {
                 return error;

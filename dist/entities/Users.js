@@ -63,7 +63,7 @@ var User = exports.User = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.P
 }, function (rol) {
     return rol.rolId;
 }), _dec(_class = (_class2 =
-// @OneToMany(() => Purchase, purchase => purchase.seller)
+//@OneToMany(() => Purchase, purchase => purchase.seller)
 // purchase= Purchase;
 function User() {
     _classCallCheck(this, User);

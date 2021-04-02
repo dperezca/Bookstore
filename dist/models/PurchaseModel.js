@@ -56,7 +56,7 @@ var PurchaseRepository = exports.PurchaseRepository = (_dec = (0, _typeorm.Entit
         key: "findAll",
         value: async function findAll() {
             try {
-                var list = await this.find({ relations: ["seller", "buyer", "prodOrder", "prodOrder.product"] });
+                var list = await this.find();
                 // const newList = [];
                 // console.log(list[0].seller.id);
                 // for (var i = 0; i<list.length - 1; i++) {

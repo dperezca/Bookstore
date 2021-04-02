@@ -48,6 +48,26 @@ var ProdOrderRepository = exports.ProdOrderRepository = (_dec = (0, _typeorm.Ent
                 throw error;
             }
         }
+    }, {
+        key: "findAll",
+        value: async function findAll() {
+            try {
+                var list = await this.find();
+                // const newList = [];
+                // console.log(list[0].seller.id);
+                // for (var i = 0; i<list.length - 1; i++) {
+                //     newList.push(
+                //         {"purchaseId": list[i].purchaseId,
+                //         "seller": {"id": list[i].seller.id,"username": list[i].seller.userName},
+                //         "buyer": {"id": list[i].seller.id,"username": list[i].seller.userName}},
+                //         "prodOrder": {"id": list[i].seller.id,"username": list[i].seller.userName}},
+                //         );
+
+                return list;
+            } catch (error) {
+                return error;
+            }
+        }
     }]);
 
     return ProdOrderRepository;

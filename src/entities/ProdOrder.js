@@ -6,9 +6,9 @@ import {Purchase} from "./Purchase";
 export class ProdOrder {
     @PrimaryGeneratedColumn()
     prodOrderId = undefined;
-    @ManyToOne(() => Product, product => product.prodId)
+    @ManyToOne(() => Product, product => product.prodId, {eager: true})
     product= Product;
-    @ManyToOne(() => Purchase, purchase => purchase.purchaseId)
+    @ManyToOne(() => Purchase, purchase => purchase.purchaseId, {eager: true})
     purchase= Purchase;
     @Column("integer")
     amount="";

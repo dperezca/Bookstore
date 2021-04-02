@@ -18,6 +18,6 @@ export class User {
     email="";
     @ManyToOne(() => Rol, rol => rol.rolId)
     rol= Rol;
-    // @OneToMany(() => Purchase, purchase => purchase.seller)
+    //@OneToMany(() => Purchase, purchase => purchase.seller)
     // purchase= Purchase;
 }

@@ -62,11 +62,11 @@ var ProdOrder = exports.ProdOrder = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, 
     return _Products.Product;
 }, function (product) {
     return product.prodId;
-}), _dec4 = (0, _typeorm.ManyToOne)(function () {
+}, { eager: true }), _dec4 = (0, _typeorm.ManyToOne)(function () {
     return _Purchase.Purchase;
 }, function (purchase) {
     return purchase.purchaseId;
-}), _dec5 = (0, _typeorm.Column)("integer"), _dec(_class = (_class2 = function ProdOrder() {
+}, { eager: true }), _dec5 = (0, _typeorm.Column)("integer"), _dec(_class = (_class2 = function ProdOrder() {
     _classCallCheck(this, ProdOrder);
 
     _initDefineProp(this, "prodOrderId", _descriptor, this);

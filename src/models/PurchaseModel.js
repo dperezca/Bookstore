@@ -29,7 +29,7 @@ export class PurchaseRepository extends Repository {
 
     async findAll () {
         try {
-        const list = await this.find({ relations: ["seller","buyer","prodOrder", "prodOrder.product"] }) ;
+        const list = await this.find() ;
         // const newList = [];
         // console.log(list[0].seller.id);
         // for (var i = 0; i<list.length - 1; i++) {

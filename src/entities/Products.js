@@ -24,7 +24,7 @@ export class Product {
     estado= Estados;
     @Column("float")
     price="";
-   // @OneToMany(() => ProdOrder, prodOrder => prodOrder.product)
-   // prodOrder= ProdOrder;
+   @OneToMany(() => ProdOrder, prodOrder => prodOrder.product)
+    prodOrder= ProdOrder;
 
 }

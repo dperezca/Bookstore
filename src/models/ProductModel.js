@@ -19,6 +19,7 @@ export class ProductRepository extends Repository {
         newProduct.idioma = product.idioma;
         newProduct.estado = product.estado;
         newProduct.price = product.price;
+        newProduct.prodOrder = [];
             return await this.save(newProduct);
     }
         catch (error) {

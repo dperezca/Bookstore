@@ -20,7 +20,7 @@ export class UserRepository extends Repository {
         user.rol = userInfo.rol;
         return await this.save(user)}
         catch (error) {
-            throw error;
+        throw error;
         }
     }
 
@@ -73,7 +73,7 @@ export class UserRepository extends Repository {
     }
     async getUserInfo(idNum) {
         try {
-            const find = await this.findOne({id: idNum,relations: ["rol"]});
+             const find = await this.findOne({where: {id: idNum},relations: ["rol"]});
             return find;
         }
         catch (error) {
