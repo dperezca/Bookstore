@@ -46,3 +46,16 @@ exports.ensureOnlySomeRoles = function(roles) {
    
   }
 }
+
+exports.ensureCreator = function(roles) {
+  return function(req,res,next) {
+    const validar = roles.find(rol => rol == req.rol);
+    if (validar) {
+      console.log("Usuario con permiso");
+      next()
+    } else {
+    console.log("El rol del usuario no le permite realizar la acción");
+    res.status(401).send("El rol del usuario no le permite realizar la acción");}
+   
+  }
+}

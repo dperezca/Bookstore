@@ -19,17 +19,16 @@ export class ProductRepository extends Repository {
 
     async findById(id) {
         try {
-        console.log(id);
-        const product = await this.find({prodId: id});
-        if (product === undefined || product.length <=0) {
-            return "El producto no existe";
+        const product = await this.findOne({prodId: id});
+      if (product === undefined || product.length <=0) {
+            throw "El producto no existe";
         } else {
             return product;
         }
        
     }
         catch (error) {
-            return error;
+            throw error;
         }
     }
 

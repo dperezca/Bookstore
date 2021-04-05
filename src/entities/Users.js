@@ -6,7 +6,7 @@ import { Purchase } from "./Purchase";
 export class User {
     @PrimaryGeneratedColumn()
     id = undefined;
-    @Column("varchar")
+    @Column("varchar", { select: false })
     password="";
     @Column("varchar", { unique: true})
     userName="";

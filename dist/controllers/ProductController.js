@@ -30,7 +30,7 @@ ProductController.findById = async function (req, res) {
         var product = await productRepository.findById(req.params.id);
         res.json(product);
     } catch (error) {
-        return error;
+        res.status(200).send(error);
     }
 };
 
@@ -53,10 +53,22 @@ ProductController.findByQuery = async function (req, res) {
 ProductController.updateById = async function (req, res) {
     try {
         var productRepository = new _typeorm.getCustomRepository(_ProductModel.ProductRepository);
-        var productUpdated = await productRepository.updateById(req.params.id, req.body);
-        res.json(productUpdated);
+        var producto = await productRepository.findById(req.params.id);
+        // Controlo que el creador sea el mismo usuario que el usuario del TOKEN activo
+        if (producto.created.id === req.user) {
+            console.log("update");
+        } else {
+            throw "Solo puede modificar el producto el creador";
+        };
+        console.log("created", producto.created.id);
+        console.log("usuario", req.user);
+        // const productUpdated = await productRepository.updateById(req.params.id, req.body);
+        // console.log("aca 2");
+        // res.send(productUpdated);
+        res.json("too ok");
     } catch (error) {
-        return error;
+        console.log("aca 4");
+        res.status(200).send(error);
     }
 };
 

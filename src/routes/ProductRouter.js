@@ -13,7 +13,7 @@ PurchaseRouter.get('/find/:id', ProductController.findById);
 PurchaseRouter.get('/find', middleware.ensureAuthenticated, ProductController.findByQuery);
 
 //Update
-PurchaseRouter.put('/update/:id', ProductController.updateById);
+PurchaseRouter.put('/update/:id', [middleware.ensureAuthenticated, middleware.ensureOnlySomeRoles([1,3])], ProductController.updateById);
 
 
 

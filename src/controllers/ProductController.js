@@ -27,7 +27,7 @@ ProductController.findById = async(req,res) => {
         res.json(product)
     }
         catch(error) {
-            return error;
+            res.status(200).send(error);
         }
     }
 
@@ -52,13 +52,24 @@ ProductController.findById = async(req,res) => {
  ProductController.updateById = async(req,res) => {
     try {
         const productRepository = new getCustomRepository(ProductRepository);
-        const productUpdated = await productRepository.updateById(req.params.id, req.body);
-        res.json(productUpdated)
-    }
+        const producto = await productRepository.findById(req.params.id);
+        // Controlo que el creador sea el mismo usuario que el usuario del TOKEN activo
+        if (producto.created.id === req.user) {
+            console.log("update");
+        } else {
+            throw "Solo puede modificar el producto el creador"
+        };
+        console.log("created",producto.created.id);
+        console.log("usuario",req.user);
+       // const productUpdated = await productRepository.updateById(req.params.id, req.body);
+        // console.log("aca 2");
+        // res.send(productUpdated);
+        res.json("too ok");    }
         catch(error) {
-            return error;
+            console.log("aca 4");
+            res.status(200).send(error);
     }
-    }
+}
 
 
 module.exports = ProductController;
