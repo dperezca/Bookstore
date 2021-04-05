@@ -72,15 +72,20 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
         value: async function login(username, password) {
             try {
                 // Busqueda por nombre de usuario
-                var find = await this.find({ where: { userName: username }, relations: ["rol"] });
-                var passwordValida = await bcrypt.compare(password, find[0].password);
+                var find = await this.findOne({ where: { userName: username }, select: ["id", "userName", "password"], relations: ["rol"] });
+                var passwordValida = await bcrypt.compare(password, find.password);
+                console.log("aca");
+                console.log(find);
+                console.log(password);
+                console.log((await bcrypt.hash(password, 2)));
+                console.log(passwordValida);
                 if (find === 'undefined' || find.length <= 0) {
                     return "Usuario no existe";
                 } // Revisa si la contraseña es la guardada
                 else if (!passwordValida) {
                         return "Constraseña incorrecta";
                     } else {
-                        var token = service.createToken(find[0].id, find[0].rol.rolId);
+                        var token = service.createToken(find.id, find.rol.rolId);
                         return token;
                     }
             } catch (error) {

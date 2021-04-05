@@ -39,16 +39,16 @@ export class UserRepository extends Repository {
     async login(username, password) {
         try {
             // Busqueda por nombre de usuario
-            const find = await this.find({where: {userName: username}, relations: ["rol"]});
-            const passwordValida = await bcrypt.compare(password,find[0].password);
+            const find = await this.findOne({where: {userName: username}, select: ["id", "userName", "password"], relations: ["rol"]});
+            const passwordValida = await bcrypt.compare(password,find.password);
             if (find === 'undefined' || find.length <= 0) {
                 return "Usuario no existe";
             } // Revisa si la contraseña es la guardada
             else if (!passwordValida) {
-                return "Constraseña incorrecta";
+                return "Contraseña incorrecta";
             }
             else {
-                const token = service.createToken(find[0].id, find[0].rol.rolId);
+                const token = service.createToken(find.id, find.rol.rolId);
                 return token;}
         }
         catch (error) {
