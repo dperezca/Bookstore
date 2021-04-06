@@ -56,18 +56,14 @@ ProductController.updateById = async function (req, res) {
         var producto = await productRepository.findById(req.params.id);
         // Controlo que el creador sea el mismo usuario que el usuario del TOKEN activo
         if (producto.created.id === req.user) {
-            console.log("update");
+            console.log("Usuario activo es el creador del producto");
+            var productoUpdated = await productRepository.updateById(req.params.id, req.body);
+
+            res.send((await productRepository.findById(req.params.id)));
         } else {
             throw "Solo puede modificar el producto el creador";
-        };
-        console.log("created", producto.created.id);
-        console.log("usuario", req.user);
-        // const productUpdated = await productRepository.updateById(req.params.id, req.body);
-        // console.log("aca 2");
-        // res.send(productUpdated);
-        res.json("too ok");
+        }
     } catch (error) {
-        console.log("aca 4");
         res.status(200).send(error);
     }
 };

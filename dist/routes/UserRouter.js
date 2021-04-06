@@ -6,7 +6,12 @@ var UserController = require('../controllers/UserController');
 var middleware = require('../../middleware');
 
 // Registro de nuevo usuario
-router.post('/', UserController.registerUser);
+router.post('/create', UserController.registerUser);
+
+// Registro de nuevo usuario
+router.get('/create', function (req, res) {
+    res.render('createUser');
+});
 
 // Modificación de datos de usuario
 router.put('/:id', [middleware.ensureAuthenticated, middleware.ensureActiveUserInfo()], UserController.updateUser);

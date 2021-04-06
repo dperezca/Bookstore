@@ -1,15 +1,33 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+var bodyParser = require('body-parser')
 import {createConnection} from 'typeorm';
 import UserRouter from './routes/UserRouter';
 import ProductRouter from './routes/ProductRouter';
 import PurchaseRouter  from './routes/PurchaseRouter';
+const exphbs = require('express-handlebars');
+
+
+
+
 
 const app = express();
+
+app.use(express.urlencoded({
+  extended: true
+}))
+
 app.use(bodyParser.json());
 
 // Iniciando server
 app.listen(3000, () => console.log("Servidor activo"));
+app.use(express.static('public'));
+
+//Handlebars
+app.engine('hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs',
+}));
+app.set('view engine', 'hbs');
 
 // Conexión a base de datos
 createConnection()
@@ -26,5 +44,10 @@ app.use('/products',ProductRouter);
 
 //Gestión de compras
 app.use('/purchase',PurchaseRouter);
+
+//Home
+app.get('/', (req, res) => {
+    res.render('home');
+});
 
 

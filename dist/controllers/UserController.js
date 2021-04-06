@@ -15,6 +15,7 @@ var UserController = {};
 // Registro de usuario 
 UserController.registerUser = async function (req, res) {
     try {
+        console.log(req.body);
         var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
         var userCreated = await userRepository.createUser(req.body);
         var token = service.createToken(userCreated.id, userCreated.rol);

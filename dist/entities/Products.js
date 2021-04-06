@@ -72,11 +72,11 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
     return _Categorias.Categorias;
 }, function (categoria) {
     return categoria.id;
-}, { nullable: false }), _dec5 = (0, _typeorm.Column)("varchar", { nullable: false }), _dec6 = (0, _typeorm.Column)("varchar", { nullable: false }), _dec7 = (0, _typeorm.Column)("varchar", { nullable: true }), _dec8 = (0, _typeorm.ManyToOne)(function () {
+}, { nullable: false }, { eager: true }), _dec5 = (0, _typeorm.Column)("varchar", { nullable: false }), _dec6 = (0, _typeorm.Column)("varchar", { nullable: false }), _dec7 = (0, _typeorm.Column)("varchar", { nullable: true }), _dec8 = (0, _typeorm.ManyToOne)(function () {
     return _Idiomas.Idiomas;
 }, function (idioma) {
     return idioma.cod;
-}, { nullable: false }), _dec9 = (0, _typeorm.ManyToOne)(function () {
+}, { nullable: false }, { eager: true }), _dec9 = (0, _typeorm.ManyToOne)(function () {
     return _Estados.Estados;
 }, function (estado) {
     return estado.estadoId;
@@ -91,7 +91,7 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
 
     _initDefineProp(this, 'created', _descriptor2, this);
 
-    _initDefineProp(this, 'categoria', _descriptor3, this);
+    _initDefineProp(this, 'category', _descriptor3, this);
 
     _initDefineProp(this, 'title', _descriptor4, this);
 
@@ -116,7 +116,7 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
     initializer: function initializer() {
         return _Users.User;
     }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, 'categoria', [_dec4], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, 'category', [_dec4], {
     enumerable: true,
     initializer: function initializer() {
         return _Categorias.Categorias;

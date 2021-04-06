@@ -11,15 +11,15 @@ export class Product {
     prodId = undefined;
     @ManyToOne(() => User, seller => seller.id, {eager: true})
     created= User;
-    @ManyToOne(() => Categorias, categoria => categoria.id, {nullable: false})
-    categoria= Categorias;
+    @ManyToOne(() => Categorias, categoria => categoria.id, {nullable: false}, {eager: true})
+    category= Categorias;
     @Column("varchar", {nullable: false})
     title="";
     @Column("varchar", {nullable: false})
     author="";
     @Column("varchar", { nullable: true })
     ISBN= "";
-    @ManyToOne(() => Idiomas, idioma => idioma.cod, {nullable: false})
+    @ManyToOne(() => Idiomas, idioma => idioma.cod, {nullable: false}, {eager: true})
     idioma= Idiomas;
     @ManyToOne(() => Estados, estado => estado.estadoId, {nullable: false})
     estado= Estados;

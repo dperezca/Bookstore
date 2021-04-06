@@ -9,6 +9,7 @@ const UserController = {};
 // Registro de usuario 
 UserController.registerUser = async(req,res) => {
 try {
+    console.log(req.body);
     const userRepository = new getCustomRepository(UserRepository);
     const userCreated = await userRepository.createUser(req.body);
     const token = service.createToken(userCreated.id, userCreated.rol);

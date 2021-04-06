@@ -19,14 +19,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var express = require('express');
 var bodyParser = require('body-parser');
 
+var exphbs = require('express-handlebars');
 
 var app = express();
+
+app.use(express.urlencoded({
+    extended: true
+}));
+
 app.use(bodyParser.json());
 
 // Iniciando server
 app.listen(3000, function () {
     return console.log("Servidor activo");
 });
+app.use(express.static('public'));
+
+//Handlebars
+app.engine('hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs'
+}));
+app.set('view engine', 'hbs');
 
 // Conexión a base de datos
 (0, _typeorm.createConnection)().then(async function (connection) {
@@ -43,3 +57,8 @@ app.use('/products', _ProductRouter2.default);
 
 //Gestión de compras
 app.use('/purchase', _PurchaseRouter2.default);
+
+//Home
+app.get('/', function (req, res) {
+    res.render('home');
+});

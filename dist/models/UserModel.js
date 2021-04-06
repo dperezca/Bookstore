@@ -74,16 +74,11 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                 // Busqueda por nombre de usuario
                 var find = await this.findOne({ where: { userName: username }, select: ["id", "userName", "password"], relations: ["rol"] });
                 var passwordValida = await bcrypt.compare(password, find.password);
-                console.log("aca");
-                console.log(find);
-                console.log(password);
-                console.log((await bcrypt.hash(password, 2)));
-                console.log(passwordValida);
                 if (find === 'undefined' || find.length <= 0) {
                     return "Usuario no existe";
                 } // Revisa si la contraseña es la guardada
                 else if (!passwordValida) {
-                        return "Constraseña incorrecta";
+                        return "Contraseña incorrecta";
                     } else {
                         var token = service.createToken(find.id, find.rol.rolId);
                         return token;

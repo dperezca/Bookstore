@@ -19,7 +19,7 @@ export class ProductRepository extends Repository {
 
     async findById(id) {
         try {
-        const product = await this.findOne({prodId: id});
+        const product = await this.findOne({prodId: id}, {relations: ["category", "idioma", "estado"]});
       if (product === undefined || product.length <=0) {
             throw "El producto no existe";
         } else {
@@ -65,14 +65,9 @@ export class ProductRepository extends Repository {
 
     async updateById(id, newProductInfo) {
         try {
-        var product = await this.findOne({prodId: id});
-        if (product === undefined || product.length <=0) {
-            return "El producto no existe";
-        } else {
-            await this.update(id, newProductInfo);
-            return product;
+            console.log("Actualizando producto");
+            return await this.update(id, newProductInfo);
         }
-    }
     catch(error) {
         return error;
     }
