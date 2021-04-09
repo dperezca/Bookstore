@@ -1,15 +1,15 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Product } from "./Products";
-import {Purchase} from "./Purchase";
+import {Order} from "./Orders";
 
 @Entity()
 export class ProdOrder {
     @PrimaryGeneratedColumn()
-    prodOrderId = undefined;
-    @ManyToOne(() => Product, product => product.prodId, {eager: true})
+    id = undefined;
+    @ManyToOne(() => Order, order => order.prodOrder)
+    order= Order;
+    @ManyToOne(() => Product, product => product.prodOrder)
     product= Product;
-    @ManyToOne(() => Purchase, purchase => purchase.purchaseId)
-    purchase= Purchase;
     @Column("integer")
     amount="";
 }

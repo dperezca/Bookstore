@@ -87,7 +87,7 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
 }), _dec(_class = (_class2 = function Product() {
     _classCallCheck(this, Product);
 
-    _initDefineProp(this, 'prodId', _descriptor, this);
+    _initDefineProp(this, 'id', _descriptor, this);
 
     _initDefineProp(this, 'created', _descriptor2, this);
 
@@ -106,7 +106,7 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
     _initDefineProp(this, 'price', _descriptor9, this);
 
     _initDefineProp(this, 'prodOrder', _descriptor10, this);
-}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'prodId', [_dec2], {
+}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'id', [_dec2], {
     enumerable: true,
     initializer: function initializer() {
         return undefined;

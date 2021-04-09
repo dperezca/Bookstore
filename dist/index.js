@@ -10,9 +10,9 @@ var _ProductRouter = require('./routes/ProductRouter');
 
 var _ProductRouter2 = _interopRequireDefault(_ProductRouter);
 
-var _PurchaseRouter = require('./routes/PurchaseRouter');
+var _OrderRouter = require('./routes/OrderRouter');
 
-var _PurchaseRouter2 = _interopRequireDefault(_PurchaseRouter);
+var _OrderRouter2 = _interopRequireDefault(_OrderRouter);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56,7 +56,7 @@ app.use('/users', _UserRouter2.default);
 app.use('/products', _ProductRouter2.default);
 
 //Gestión de compras
-app.use('/purchase', _PurchaseRouter2.default);
+app.use('/orders', _OrderRouter2.default);
 
 //Home
 app.get('/', function (req, res) {

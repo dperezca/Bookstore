@@ -4,6 +4,8 @@ var _ProductModel = require('../models/ProductModel');
 
 var _typeorm = require('typeorm');
 
+var _Products = require('../entities/Products');
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var ProductModel = require("../models/ProductModel");
@@ -49,20 +51,49 @@ ProductController.findByQuery = async function (req, res) {
     }
 };
 
-//Update by ID
-ProductController.updateById = async function (req, res) {
+//Mostrar todos
+ProductController.findAll = async function (req, res) {
+    try {
+        var _ProductRepository = new _typeorm.getRepository(_Products.Product);
+        var listaProd = await _ProductRepository.find();
+        res.send(listaProd);
+    } catch (error) {
+        res.status(200).send(error);
+    }
+};
+
+//Revisar quien es el creador 
+ProductController.checkIfCreator = async function (req, res, next) {
     try {
         var productRepository = new _typeorm.getCustomRepository(_ProductModel.ProductRepository);
         var producto = await productRepository.findById(req.params.id);
         // Controlo que el creador sea el mismo usuario que el usuario del TOKEN activo
         if (producto.created.id === req.user) {
-            console.log("Usuario activo es el creador del producto");
-            var productoUpdated = await productRepository.updateById(req.params.id, req.body);
-
-            res.send((await productRepository.findById(req.params.id)));
+            next();
         } else {
             throw "Solo puede modificar el producto el creador";
         }
+    } catch (error) {
+        res.status(200).send(error);
+    }
+};
+
+//Update by ID
+ProductController.updateById = async function (req, res) {
+    try {
+        var productRepository = new _typeorm.getCustomRepository(_ProductModel.ProductRepository);
+        var productoUpdated = await productRepository.updateById(req.params.id, req.body);
+        res.send((await productRepository.findById(req.params.id)));
+    } catch (error) {
+        res.status(200).send(error);
+    }
+};
+
+ProductController.delete = async function (req, res) {
+    try {
+        var _ProductRepository2 = new _typeorm.getRepository(_Products.Product);
+        await _ProductRepository2.delete(req.params.id);
+        res.send("Producto Eliminado");
     } catch (error) {
         res.status(200).send(error);
     }

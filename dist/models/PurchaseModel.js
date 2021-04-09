@@ -11,7 +11,7 @@ var _dec, _class;
 
 var _typeorm = require("typeorm");
 
-var _Purchase = require("../entities/Purchase");
+var _Orders = require("../entities/Orders");
 
 var _UserModel = require("./UserModel");
 
@@ -23,7 +23,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PurchaseRepository = exports.PurchaseRepository = (_dec = (0, _typeorm.EntityRepository)(_Purchase.Purchase), _dec(_class = function (_Repository) {
+var PurchaseRepository = exports.PurchaseRepository = (_dec = (0, _typeorm.EntityRepository)(_Orders.Purchase), _dec(_class = function (_Repository) {
     _inherits(PurchaseRepository, _Repository);
 
     function PurchaseRepository() {
@@ -39,7 +39,7 @@ var PurchaseRepository = exports.PurchaseRepository = (_dec = (0, _typeorm.Entit
         // Nueva compra
         value: async function newPurchase(purchaseInfo) {
             try {
-                var purchase = new _Purchase.Purchase();
+                var purchase = new _Orders.Purchase();
                 purchase.seller = purchaseInfo.seller;
                 purchase.buyer = purchaseInfo.buyer;
                 return await this.save(purchase);
@@ -60,7 +60,7 @@ var PurchaseRepository = exports.PurchaseRepository = (_dec = (0, _typeorm.Entit
         key: "findAll",
         value: async function findAll() {
             try {
-                var list = await this.find({ relations: ["buyer", "seller", "prodOrder"] });
+                var list = await this.find({ relations: ["buyer", "prodOrder"] });
                 // const newList = [];
                 // console.log(list[0].seller.id);
                 // for (var i = 0; i<list.length - 1; i++) {

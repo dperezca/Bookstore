@@ -4,13 +4,11 @@ import { ProdOrder } from "./ProdOrder";
 import PurchaseRouter from "../routes/ProductRouter";
 
 @Entity()
-export class Purchase {
+export class Order {
     @PrimaryGeneratedColumn()
-    purchaseId = undefined;
-    @ManyToOne(() => User, seller => seller.id, {eager: true})
-    created= User;
+    id = undefined;
     @ManyToOne(() => User, buyer => buyer.id, {eager: true})
     buyer= User;
-     @OneToMany(() => ProdOrder, prodOrder => prodOrder.purchase)
-   prodOrder= ProdOrder;
+     @OneToMany(() => ProdOrder, prodOrder => prodOrder.order)
+    prodOrder= ProdOrder;
 }

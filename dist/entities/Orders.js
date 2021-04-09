@@ -3,15 +3,21 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.ProdOrder = undefined;
+exports.Order = undefined;
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+var _dec, _dec2, _dec3, _dec4, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3;
 
 var _typeorm = require("typeorm");
 
-var _Products = require("./Products");
+var _Users = require("./Users");
 
-var _Orders = require("./Orders");
+var _ProdOrder = require("./ProdOrder");
+
+var _ProductRouter = require("../routes/ProductRouter");
+
+var _ProductRouter2 = _interopRequireDefault(_ProductRouter);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -58,42 +64,35 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var ProdOrder = exports.ProdOrder = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.ManyToOne)(function () {
-    return _Orders.Order;
-}, function (order) {
-    return order.prodOrder;
-}), _dec4 = (0, _typeorm.ManyToOne)(function () {
-    return _Products.Product;
-}, function (product) {
-    return product.prodOrder;
-}), _dec5 = (0, _typeorm.Column)("integer"), _dec(_class = (_class2 = function ProdOrder() {
-    _classCallCheck(this, ProdOrder);
+var Order = exports.Order = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.ManyToOne)(function () {
+    return _Users.User;
+}, function (buyer) {
+    return buyer.id;
+}, { eager: true }), _dec4 = (0, _typeorm.OneToMany)(function () {
+    return _ProdOrder.ProdOrder;
+}, function (prodOrder) {
+    return prodOrder.order;
+}), _dec(_class = (_class2 = function Order() {
+    _classCallCheck(this, Order);
 
     _initDefineProp(this, "id", _descriptor, this);
 
-    _initDefineProp(this, "order", _descriptor2, this);
+    _initDefineProp(this, "buyer", _descriptor2, this);
 
-    _initDefineProp(this, "product", _descriptor3, this);
-
-    _initDefineProp(this, "amount", _descriptor4, this);
+    _initDefineProp(this, "prodOrder", _descriptor3, this);
 }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "id", [_dec2], {
     enumerable: true,
     initializer: function initializer() {
         return undefined;
     }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "order", [_dec3], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "buyer", [_dec3], {
     enumerable: true,
     initializer: function initializer() {
-        return _Orders.Order;
+        return _Users.User;
     }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "product", [_dec4], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "prodOrder", [_dec4], {
     enumerable: true,
     initializer: function initializer() {
-        return _Products.Product;
-    }
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "amount", [_dec5], {
-    enumerable: true,
-    initializer: function initializer() {
-        return "";
+        return _ProdOrder.ProdOrder;
     }
 })), _class2)) || _class);

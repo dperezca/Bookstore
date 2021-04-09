@@ -1,20 +1,24 @@
 const express = require('express');
-const PurchaseRouter = express.Router();
+const router = express.Router();
 const ProductController = require('../controllers/ProductController');
 const middleware = require('../../middleware');
 
 // Crear un nuevo producto
-PurchaseRouter.post('/create', [middleware.ensureAuthenticated, middleware.ensureOnlySomeRoles([1,3])], ProductController.createProduct);
+router.post('/create', [middleware.ensureAuthenticated, middleware.ensureOnlySomeRoles([1,3])], ProductController.createProduct);
 
 //Buscar producto por ID
-PurchaseRouter.get('/find/:id', ProductController.findById);
+router.get('/find/:id', ProductController.findById);
 
 //Buscar por query
-PurchaseRouter.get('/find', middleware.ensureAuthenticated, ProductController.findByQuery);
+router.get('/find', ProductController.findByQuery);
+
+//Mostrar todos
+router.get('/', ProductController.findAll);
 
 //Update
-PurchaseRouter.put('/update/:id', [middleware.ensureAuthenticated, middleware.ensureOnlySomeRoles([1,3])], ProductController.updateById);
+router.put('/update/:id', [middleware.ensureAuthenticated, middleware.ensureOnlySomeRoles([1,3])], ProductController.checkIfCreator, ProductController.updateById);
 
+//Delete
+router.delete('/delete/:id', [middleware.ensureAuthenticated, middleware.ensureOnlySomeRoles([1,3])], ProductController.checkIfCreator, ProductController.delete);
 
-
-module.exports = PurchaseRouter;
+module.exports = router;

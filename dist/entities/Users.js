@@ -11,7 +11,7 @@ var _typeorm = require("typeorm");
 
 var _Roles = require("./Roles");
 
-var _Purchase = require("./Purchase");
+var _Orders = require("./Orders");
 
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;

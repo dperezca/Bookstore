@@ -8,7 +8,7 @@ import {User} from './Users'
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
-    prodId = undefined;
+    id = undefined;
     @ManyToOne(() => User, seller => seller.id, {eager: true})
     created= User;
     @ManyToOne(() => Categorias, categoria => categoria.id, {nullable: false}, {eager: true})
@@ -25,7 +25,7 @@ export class Product {
     estado= Estados;
     @Column("float", {nullable: false})
     price="";
-   @OneToMany(() => ProdOrder, prodOrder => prodOrder.product)
+    @OneToMany(() => ProdOrder, prodOrder => prodOrder.product)
     prodOrder= ProdOrder;
 
 }

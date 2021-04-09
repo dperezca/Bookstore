@@ -58,24 +58,9 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
         key: "findByQuery",
         value: async function findByQuery(query) {
             try {
-                var criterio = Object.getOwnPropertyNames(query)[0];
-                var listProd;
-                switch (criterio) {
-                    case "author":
-                        listProd = await this.find({ author: (0, _typeorm.Like)("%" + query.author + "%") });
-                    case 'title':
-                        listProd = await this.find({ title: (0, _typeorm.Like)("%" + query.title + "%") });
-                    case 'seller':
-                        listProd = await this.find({ seller: (0, _typeorm.Like)("%" + query.seller + "%") });
-                    case 'category':
-                        listProd = await this.find({ categoria: (0, _typeorm.Like)("%" + query.category + "%") });
-                    case 'isbn':
-                        listProd = await this.find({ isbn: (0, _typeorm.Like)("%" + query.isbn + "%") });
-                    case 'estado':
-                        listProd = await this.find({ estado: (0, _typeorm.Like)("%" + query.estado + "%") });
-                    case 'idioma':
-                        listProd = await this.find({ idioma: (0, _typeorm.Like)("%" + query.idioma + "%") });
-                }
+                var listProd = await this.find({
+                    where: [query]
+                });
                 if (listProd.length === 0) {
                     return "No se encontraton coincidencias";
                 } else {

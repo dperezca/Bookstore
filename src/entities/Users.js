@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
 import { Rol } from "./Roles";
-import { Purchase } from "./Purchase";
+import { Purchase } from "./Orders";
 
 @Entity()
 export class User {

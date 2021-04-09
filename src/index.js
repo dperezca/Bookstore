@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 import {createConnection} from 'typeorm';
 import UserRouter from './routes/UserRouter';
 import ProductRouter from './routes/ProductRouter';
-import PurchaseRouter  from './routes/PurchaseRouter';
+import OrderRouter  from './routes/OrderRouter';
 const exphbs = require('express-handlebars');
 
 
@@ -43,7 +43,7 @@ app.use('/users',UserRouter);
 app.use('/products',ProductRouter);
 
 //Gestión de compras
-app.use('/purchase',PurchaseRouter);
+app.use('/orders',OrderRouter);
 
 //Home
 app.get('/', (req, res) => {
