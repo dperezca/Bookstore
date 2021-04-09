@@ -1,7 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
 import { User } from "./Users";
 import { ProdOrder } from "./ProdOrder";
-import PurchaseRouter from "../routes/ProductRouter";
 
 @Entity()
 export class Order {

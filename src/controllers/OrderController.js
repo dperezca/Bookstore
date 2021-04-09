@@ -29,7 +29,7 @@ OrderController.newOrder = async(req,res) => {
             prod_order.amount= req.body.products[i].amount;
             await prodOrderRepository.save(prod_order);
         }
-        const showOrder = await orderRepository.findOne({id: savedOrder.id}, {relations: ["prodOrder"]});
+        const showOrder = await orderRepository.findOne({id: savedOrder.id}, {relations: ["prodOrder","prodOrder.product"]});
         console.log(showOrder);
         res.json(showOrder);
     }
@@ -38,37 +38,19 @@ OrderController.newOrder = async(req,res) => {
         res.status(200).json(error);
     }
     }
-        // Con el id de la orden, guardo los productos en la tabla de prod_orden
-
-       // await prodOrderRepository.save(prod_order);
-           // orderRepository.save(req.body);
-        // const purchase = await orderRepository.newPurchase(req.body);
-        // // Con el id de la orden, guardo los productos en la tabla de prod_orden
-        // try {const prodOrderRepository = new getCustomRepository(ProdOrderRepository);
-        // const prodOrder = await prodOrderRepository.newOrderList(purchase.purchaseId, req.body);
-        // res.json(req.body)}
-        // Si hay errores guardando los productos, me borra la compra y me devuelve error
         catch(error) {
             res.status(200).send(error);
-            console.log(error);
-            // await orderRepository.deletePurchase(purchase.purchaseId);
-            // res.status(200).json(error);
         }
     }
-        // catch(error) {
-        //     res.status(200).json(error);
-        // }
-    
 
-    // Creación de un nuevo product
+    //  Mostrar todos los productos
     OrderController.showOrders = async(req,res) => {
     try {
         const orderRepository = new getRepository(Order);
-        const allPurchases = await orderRepository.find({relations: ["prodOrder","prodOrder.product"]});
-        res.json(allPurchases);
+        const allOrders = await orderRepository.find({relations: ["prodOrder","prodOrder.product"]});
+        res.json(allOrders);
     }
         catch(error) {
-            console.log(error);
             res.status(200).send(error);
         }
     }
