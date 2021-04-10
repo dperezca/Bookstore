@@ -17,7 +17,7 @@ export class PurchaseRepository extends Repository {
         return await this.save(purchase);}
         catch (error) {
             throw error;
-        }
+        } 
     }
 
     async deletePurchase (id) {

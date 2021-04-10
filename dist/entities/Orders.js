@@ -13,12 +13,6 @@ var _Users = require("./Users");
 
 var _ProdOrder = require("./ProdOrder");
 
-var _ProductRouter = require("../routes/ProductRouter");
-
-var _ProductRouter2 = _interopRequireDefault(_ProductRouter);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {

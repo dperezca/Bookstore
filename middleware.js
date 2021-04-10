@@ -25,11 +25,13 @@ exports.ensureAuthenticated = function(req, res, next) {
 
 exports.ensureActiveUserInfo = function() {
   return function(req,res,next) {
-     // Con la información del TOKEN controla que el usuario sea ADMIN o sea pida la información del usuario logueado
+     // Con la información del TOKEN controla que el usuario sea ADMIN o sea pida la información del usuario logueados
+    console.log(`Usuario logueado: ${req.user} - Compras pedidas para usuario ${req.params.id}`);
     if (req.rol === 1 || req.user == req.params.id) {
+      console.log(`OK - El usuario puede acceder a las compras`);
       next();
     } else {
-      res.status(401).send("No puede acceder a la información de otro usuario");
+      res.status(401).send("ERROR - No puede acceder a la información de otro usuario");
     }
   }
 }

@@ -47,11 +47,62 @@ OrderController.newOrder = async(req,res) => {
     OrderController.showOrders = async(req,res) => {
     try {
         const orderRepository = new getRepository(Order);
-        const allOrders = await orderRepository.find({relations: ["prodOrder","prodOrder.product"]});
+        const allOrders = await orderRepository.find(
+            {relations: ["buyer","prodOrder","prodOrder.product"]})
         res.json(allOrders);
     }
         catch(error) {
             res.status(200).send(error);
         }
     }
+ 
+    //Muestra compras hechas por el usuario que viene en el parametro
+    OrderController.showOrdersUser = async(req,res,next) => {
+        try 
+{       const orderRepository = new getRepository(Order);
+        const orders = await orderRepository.find({buyer: req.params.id},{relations: ["prodOrder","prodOrder.product"]});
+        res.status(200).json(orders);}
+        catch (error) {
+            res.status(200).send(error);
+        }
+    }
+
+        //Actualiza la orden
+        //Los productos no se pueden actualizar 
+        OrderController.updateOrder = async(req,res,next) => {
+            try {           
+            console.log(`Actualizando orden numero ${req.params.order}`);
+            const orderRepository = new getRepository(Order);
+            const newOrder = await orderRepository.update(req.params.order,req.body);
+            console.log(`OK - Orden actualizada`);
+            console.log(`Buscando info actualizada de orden ${req.params.order}`);
+            const orderUpdated = await orderRepository.findOne({id: req.params.order},{relations: ["prodOrder","prodOrder.product"]});
+            res.status(200).json(orderUpdated);}
+            catch (error) {
+                console.log(error);
+                res.status(200).send(error);
+            }
+        }
+
+            OrderController.checkIfBuyer = async(req,res,next) => {
+                try {
+                    const orderRepository = new getRepository(Order);
+                    const order = await orderRepository.findOne({id: req.params.order});
+                    // Controlo que el comprador sea el mismo usuario que el usuario del TOKEN activo
+                    console.log("ID Usuario: ",req.user," Buyer: ",order.buyer.id);
+                    if (order.buyer.id == req.user || req.rol === 1) {
+                        console.log("OK - Usuario activo es el comprador o admin")
+                        next();
+                    } else {
+                        console.log("ERROR - Usuario distinto al comprador")
+                        throw "Solo puede modificar el producto el comprador o un administrador"
+                    }
+                }
+                    catch(error) {
+                        res.status(200).send(error);
+                }    
+            
+            }
+        
+
 module.exports = OrderController;
