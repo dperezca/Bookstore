@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 import { getCustomRepository } from 'typeorm';
-import { PurchaseRepository } from '../models/PurchaseModel';
-import { ProdOrderRepository } from '../models/ProdOrder';
 import { getRepository } from 'typeorm';
 import { Order } from "../entities/Orders";
 import { ProdOrder } from "../entities/ProdOrder";
@@ -58,9 +56,12 @@ OrderController.newOrder = async(req,res) => {
  
     //Muestra compras hechas por el usuario que viene en el parametro
     OrderController.showOrdersUser = async(req,res,next) => {
-        try 
-{       const orderRepository = new getRepository(Order);
-        const orders = await orderRepository.find({buyer: req.params.id},{relations: ["prodOrder","prodOrder.product"]});
+        try {
+        console.log("aca");
+   const orderRepository = new getRepository(Order);
+        const orders = await orderRepository.find({
+            where: {buyer: req.params.id},
+            relations: ["prodOrder","prodOrder.product"]});
         res.status(200).json(orders);}
         catch (error) {
             res.status(200).send(error);
@@ -83,6 +84,7 @@ OrderController.newOrder = async(req,res) => {
                 res.status(200).send(error);
             }
         }
+
 
             OrderController.checkIfBuyer = async(req,res,next) => {
                 try {

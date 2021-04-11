@@ -2,13 +2,9 @@
 
 var _typeorm = require('typeorm');
 
-var _PurchaseModel = require('../models/PurchaseModel');
-
-var _ProdOrder = require('../models/ProdOrder');
-
 var _Orders = require('../entities/Orders');
 
-var _ProdOrder2 = require('../entities/ProdOrder');
+var _ProdOrder = require('../entities/ProdOrder');
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -27,10 +23,10 @@ OrderController.newOrder = async function (req, res) {
         var savedOrder = await orderRepository.save(order);
         // Genero la instancia de prod_order
         try {
-            var prodOrderRepository = new _typeorm.getRepository(_ProdOrder2.ProdOrder);
-            var prod_order = new _ProdOrder2.ProdOrder();
+            var prodOrderRepository = new _typeorm.getRepository(_ProdOrder.ProdOrder);
+            var prod_order = new _ProdOrder.ProdOrder();
             for (var i = 0; i < req.body.products.length; i++) {
-                var _prod_order = new _ProdOrder2.ProdOrder();
+                var _prod_order = new _ProdOrder.ProdOrder();
                 _prod_order.order = savedOrder.id;
                 _prod_order.product = req.body.products[i].id;
                 _prod_order.amount = req.body.products[i].amount;
@@ -62,8 +58,11 @@ OrderController.showOrders = async function (req, res) {
 //Muestra compras hechas por el usuario que viene en el parametro
 OrderController.showOrdersUser = async function (req, res, next) {
     try {
+        console.log("aca");
         var orderRepository = new _typeorm.getRepository(_Orders.Order);
-        var orders = await orderRepository.find({ buyer: req.params.id }, { relations: ["prodOrder", "prodOrder.product"] });
+        var orders = await orderRepository.find({
+            where: { buyer: req.params.id },
+            relations: ["prodOrder", "prodOrder.product"] });
         res.status(200).json(orders);
     } catch (error) {
         res.status(200).send(error);

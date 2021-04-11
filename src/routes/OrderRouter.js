@@ -14,6 +14,6 @@ router.get('/users/:id', [middleware.ensureAuthenticated, middleware.ensureActiv
 
 //Actualizar compra (datos de factura)
 //Restringido: unicamente las puede ver el usuario que haya comprado o con rol = admin
-router.put('/:order', [middleware.ensureAuthenticated, middleware.ensureOnlySomeRoles([1,2,3])], OrderController.checkIfBuyer,OrderController.updateOrder);
+router.put('/:order', [middleware.ensureAuthenticated], OrderController.checkIfBuyer,OrderController.updateOrder);
 
 module.exports = router;
