@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Order = undefined;
 
-var _dec, _dec2, _dec3, _dec4, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3;
+var _dec, _dec2, _dec3, _dec4, _dec5, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4;
 
 var _typeorm = require("typeorm");
 
@@ -62,11 +62,11 @@ var Order = exports.Order = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm
     return _Users.User;
 }, function (buyer) {
     return buyer.id;
-}, { eager: true }), _dec4 = (0, _typeorm.OneToMany)(function () {
+}, { eager: true }, { update: false }), _dec4 = (0, _typeorm.OneToMany)(function () {
     return _ProdOrder.ProdOrder;
 }, function (prodOrder) {
     return prodOrder.order;
-}), _dec(_class = (_class2 = function Order() {
+}), _dec5 = (0, _typeorm.Column)("varchar"), _dec(_class = (_class2 = function Order() {
     _classCallCheck(this, Order);
 
     _initDefineProp(this, "id", _descriptor, this);
@@ -74,6 +74,8 @@ var Order = exports.Order = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm
     _initDefineProp(this, "buyer", _descriptor2, this);
 
     _initDefineProp(this, "prodOrder", _descriptor3, this);
+
+    _initDefineProp(this, "address", _descriptor4, this);
 }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "id", [_dec2], {
     enumerable: true,
     initializer: function initializer() {
@@ -88,5 +90,10 @@ var Order = exports.Order = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm
     enumerable: true,
     initializer: function initializer() {
         return _ProdOrder.ProdOrder;
+    }
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "address", [_dec5], {
+    enumerable: true,
+    initializer: function initializer() {
+        return "";
     }
 })), _class2)) || _class);

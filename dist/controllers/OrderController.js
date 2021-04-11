@@ -17,14 +17,16 @@ OrderController.newOrder = async function (req, res) {
     try {
         // Genero una nueva orden
         var orderRepository = new _typeorm.getRepository(_Orders.Order);
-        var order = new _Orders.Order();
-        order.buyer = req.user;
-        order.prodOrder = [];
-        var savedOrder = await orderRepository.save(order);
+        var newOrder = new _Orders.Order();
+        //Agrego el id del usuario activo en TOKEN como buyer de la orden
+        req.body.buyer = req.user;
+        var savedOrder = await orderRepository.save(req.body);
+        console.log('OK - Orden ' + savedOrder.id + ' generada - Guardando productos de la orden...');
         // Genero la instancia de prod_order
         try {
             var prodOrderRepository = new _typeorm.getRepository(_ProdOrder.ProdOrder);
             var prod_order = new _ProdOrder.ProdOrder();
+            // Genero una nueva instancia y guardo por cada producto de la orden
             for (var i = 0; i < req.body.products.length; i++) {
                 var _prod_order = new _ProdOrder.ProdOrder();
                 _prod_order.order = savedOrder.id;
@@ -32,14 +34,18 @@ OrderController.newOrder = async function (req, res) {
                 _prod_order.amount = req.body.products[i].amount;
                 await prodOrderRepository.save(_prod_order);
             }
+            // Busco la orden guardada y la devuelvo en la response
+            console.log('OK - Productos guardados');
             var showOrder = await orderRepository.findOne({ id: savedOrder.id }, { relations: ["prodOrder", "prodOrder.product"] });
-            console.log(showOrder);
             res.json(showOrder);
         } catch (error) {
+            // Si no puedo guardar algun producto, devuelvo error y elimino la orden guardada
+            console.log('ERROR - No se pudieron guardar los productos: ' + error);
             await orderRepository.delete(savedOrder.id);
-            res.status(200).json(error);
+            res.status(200).send(error);
         }
     } catch (error) {
+        console.log('ERROR - No se pudieron generar la orden: ' + error);
         res.status(200).send(error);
     }
 };
@@ -58,7 +64,6 @@ OrderController.showOrders = async function (req, res) {
 //Muestra compras hechas por el usuario que viene en el parametro
 OrderController.showOrdersUser = async function (req, res, next) {
     try {
-        console.log("aca");
         var orderRepository = new _typeorm.getRepository(_Orders.Order);
         var orders = await orderRepository.find({
             where: { buyer: req.params.id },
@@ -75,9 +80,8 @@ OrderController.updateOrder = async function (req, res, next) {
     try {
         console.log('Actualizando orden numero ' + req.params.order);
         var orderRepository = new _typeorm.getRepository(_Orders.Order);
-        var newOrder = await orderRepository.update(req.params.order, req.body);
-        console.log('OK - Orden actualizada');
-        console.log('Buscando info actualizada de orden ' + req.params.order);
+        var newOrder = await orderRepository.update(req.params.order, { address: req.body.address });
+        console.log('OK - Orden actualizada');;
         var orderUpdated = await orderRepository.findOne({ id: req.params.order }, { relations: ["prodOrder", "prodOrder.product"] });
         res.status(200).json(orderUpdated);
     } catch (error) {

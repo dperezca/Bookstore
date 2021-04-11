@@ -6,8 +6,10 @@ import { ProdOrder } from "./ProdOrder";
 export class Order {
     @PrimaryGeneratedColumn()
     id = undefined;
-    @ManyToOne(() => User, buyer => buyer.id, {eager: true})
+    @ManyToOne(() => User, buyer => buyer.id, {eager: true},{update: false})
     buyer= User;
      @OneToMany(() => ProdOrder, prodOrder => prodOrder.order)
     prodOrder= ProdOrder;
+    @Column("varchar")
+    address = "";
 }
