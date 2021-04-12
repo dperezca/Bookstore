@@ -32,25 +32,10 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
     }
 
     _createClass(UserRepository, [{
-        key: "createUser",
+        key: "updateUser",
 
-
-        // Registro de usuario con los datos del JSON
-        value: async function createUser(userInfo) {
-            try {
-                // Crea el usuario
-                var user = new _Users.User();
-                userInfo.password = await bcrypt.hash(userInfo.password, 2);
-                return await this.save(userInfo);
-            } catch (error) {
-                throw error;
-            }
-        }
 
         // Modificación de datos de usuario
-
-    }, {
-        key: "updateUser",
         value: async function updateUser(userId, userInfo) {
             try {
                 // Si lo que modifica es la password, la hashea
@@ -62,29 +47,6 @@ var UserRepository = exports.UserRepository = (_dec = (0, _typeorm.EntityReposit
                 return user;
             } catch (error) {
                 throw error;
-            }
-        }
-
-        //Login
-
-    }, {
-        key: "login",
-        value: async function login(username, password) {
-            try {
-                // Busqueda por nombre de usuario
-                var find = await this.findOne({ where: { userName: username }, select: ["id", "userName", "password"], relations: ["rol"] });
-                var passwordValida = await bcrypt.compare(password, find.password);
-                if (find === 'undefined' || find.length <= 0) {
-                    return "Usuario no existe";
-                } // Revisa si la contraseña es la guardada
-                else if (!passwordValida) {
-                        return "Contraseña incorrecta";
-                    } else {
-                        var token = service.createToken(find.id, find.rol.rolId);
-                        return token;
-                    }
-            } catch (error) {
-                return error;
             }
         }
     }, {
