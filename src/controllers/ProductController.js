@@ -4,7 +4,9 @@ const ProductModel = require("../models/ProductModel")
 import { ProductRepository } from '../models/ProductModel';
 import { getCustomRepository } from 'typeorm';
 import { getRepository } from 'typeorm';
+import { getConnection } from 'typeorm';
 import { Product } from "../entities/Products";
+import { ProdOrder } from '../entities/ProdOrder';
 
 const ProductController = {};
 
@@ -93,13 +95,43 @@ ProductController.checkIfCreator = async(req,res,next) => {
     }
  }  
 
-ProductController.delete = async(req,res) => {
+ ProductController.delete = async(req,res) => {
     try {
         const ProductRepository = new getRepository(Product);
         await ProductRepository.delete(req.params.id);
         res.send("Producto Eliminado");
     } 
     catch (error) {
+        res.status(200).send(error);
+    }
+}
+
+ProductController.bestSellers = async(req,res) => {
+    try {
+        console.log(`Buscando 10 productos más vendidos`);
+        // Sumo las cantidades de las ordenes y devuelvo 10 productos mas vendidos y cantidad vendida
+        const prod_orders  = await getRepository(ProdOrder)
+        .createQueryBuilder("prod_order")
+        .select("prod_order.product")
+        .addSelect("SUM(prod_order.quantity)", "sum")
+        .groupBy("prod_order.product")
+        .limit(10)
+        .orderBy("SUM(prod_order.quantity)","DESC")
+        .getRawMany();
+        // Creo un array y por cada producto encuentro los datos y le agrego la cantidad vendida
+        const bestSellers = [];
+        for (var i = 0; i<prod_orders.length; i++) {
+            const id = prod_orders[i].productId;
+            const prod =  await getRepository(Product).findOne({where: {id: prod_orders[i].productId}, relations: ["idioma", "estado", "category"]});
+           prod.quantity= prod_orders[i].sum;
+            bestSellers.push(prod);
+        }
+        // Devuelvo el nuevo array
+        console.log(`OK - Productos encontrados`,bestSellers);
+        await res.status(200).send(bestSellers);
+    } 
+    catch (error) {
+        console.log(`ERROR`,error);
         res.status(200).send(error);
     }
 }

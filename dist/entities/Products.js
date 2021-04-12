@@ -80,7 +80,7 @@ var Product = exports.Product = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typ
     return _Estados.Estados;
 }, function (estado) {
     return estado.estadoId;
-}, { nullable: false }), _dec10 = (0, _typeorm.Column)("float", { nullable: false }), _dec11 = (0, _typeorm.OneToMany)(function () {
+}, { nullable: false }, { eager: true }), _dec10 = (0, _typeorm.Column)("float", { nullable: false }), _dec11 = (0, _typeorm.OneToMany)(function () {
     return _ProdOrder.ProdOrder;
 }, function (prodOrder) {
     return prodOrder.product;

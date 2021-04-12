@@ -66,7 +66,7 @@ var ProdOrder = exports.ProdOrder = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, 
     return _Products.Product;
 }, function (product) {
     return product.prodOrder;
-}), _dec5 = (0, _typeorm.Column)("integer"), _dec(_class = (_class2 = function ProdOrder() {
+}, { eager: true }), _dec5 = (0, _typeorm.Column)("integer"), _dec(_class = (_class2 = function ProdOrder() {
     _classCallCheck(this, ProdOrder);
 
     _initDefineProp(this, "id", _descriptor, this);
@@ -75,7 +75,7 @@ var ProdOrder = exports.ProdOrder = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, 
 
     _initDefineProp(this, "product", _descriptor3, this);
 
-    _initDefineProp(this, "amount", _descriptor4, this);
+    _initDefineProp(this, "quantity", _descriptor4, this);
 }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "id", [_dec2], {
     enumerable: true,
     initializer: function initializer() {
@@ -91,7 +91,7 @@ var ProdOrder = exports.ProdOrder = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, 
     initializer: function initializer() {
         return _Products.Product;
     }
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "amount", [_dec5], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "quantity", [_dec5], {
     enumerable: true,
     initializer: function initializer() {
         return "";

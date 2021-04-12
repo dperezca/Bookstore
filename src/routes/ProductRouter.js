@@ -15,6 +15,9 @@ router.get('/find', ProductController.findByQuery);
 //Mostrar todos
 router.get('/', ProductController.findAll);
 
+//Más vendidos
+router.get('/bestsellers/', ProductController.bestSellers);
+
 //Update
 router.put('/update/:id', [middleware.ensureAuthenticated, middleware.ensureOnlySomeRoles([1,3])], ProductController.checkIfCreator, ProductController.updateById);
 

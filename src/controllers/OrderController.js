@@ -79,7 +79,7 @@ OrderController.newOrder = async(req,res) => {
             try {           
             console.log(`Actualizando orden numero ${req.params.order}`);
             const orderRepository = new getRepository(Order);
-            const newOrder = await orderRepository.update(req.params.order,{address: req.body.address});
+            const newOrder = await orderRepository.update(req.params.order,req.body);
             console.log(`OK - Orden actualizada`);;
             const orderUpdated = await orderRepository.findOne({id: req.params.order},{relations: ["prodOrder","prodOrder.product"]});
             res.status(200).json(orderUpdated);}

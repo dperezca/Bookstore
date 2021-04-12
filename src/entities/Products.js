@@ -21,7 +21,7 @@ export class Product {
     ISBN= "";
     @ManyToOne(() => Idiomas, idioma => idioma.cod, {nullable: false}, {eager: true})
     idioma= Idiomas;
-    @ManyToOne(() => Estados, estado => estado.estadoId, {nullable: false})
+    @ManyToOne(() => Estados, estado => estado.estadoId, {nullable: false}, {eager: true})
     estado= Estados;
     @Column("float", {nullable: false})
     price="";

@@ -8,8 +8,8 @@ export class ProdOrder {
     id = undefined;
     @ManyToOne(() => Order, order => order.prodOrder)
     order= Order;
-    @ManyToOne(() => Product, product => product.prodOrder)
+    @ManyToOne(() => Product, product => product.prodOrder, {eager: true})
     product= Product;
     @Column("integer")
-    amount="";
+    quantity="";
 }
