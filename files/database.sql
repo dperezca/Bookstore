@@ -11,10 +11,3 @@ INSERT INTO categorias ( categoryDesc ) VALUES
 
 INSERT INTO estados ( estadoDesc ) VALUES
 ( "Nuevo" ), ( "Usado" );
-
-CREATE TABLE estados (
-    estadoId int AUTO_INCREMENT,
-    estadoDesc varchar(255),
-    PRIMARY KEY (estadoId)
-);
-
