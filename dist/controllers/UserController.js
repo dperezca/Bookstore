@@ -20,13 +20,10 @@ var UserController = {};
 UserController.registerUser = async function (req, res) {
     try {
         console.log('Registrando usuario...');
-        console.log('Hasheando datos privados...');
-        // Con los datos de la request, hasheado aquellos que sean datos privados
+        console.log('Hasheando password...');
+        // Con los datos de la request, hasheo el passwords
         var user = req.body;
         user.password = await bcrypt.hash(user.password, 2);
-        user.firstName = await bcrypt.hash(user.firstName, 2);
-        user.lastName = await bcrypt.hash(user.lastName, 2);
-        user.email = await bcrypt.hash(user.email, 2);
         console.log('OK');
         console.log('Guardando nuevo usuario...');
         // Guardo los datos en el repositorio de Users
@@ -46,16 +43,31 @@ UserController.registerUser = async function (req, res) {
 
 //Modificación de datos de usuario
 UserController.updateUser = async function (req, res) {
-    {
-        try {
-            var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
-            var userUpdated = await userRepository.updateUser(req.params.id, req.body);
-            res.json(userUpdated);
-        } catch (error) {
-            res.send(error);
+    try {
+        // Busco un usuario que coincida con el id que viene en la request
+        console.log('Buscando usuario existente...');
+        var user = await new _typeorm.getRepository(_Users.User).findOne({ where: { id: req.params.id }, select: ["id", "userName"], relations: ["rol"] });
+        // Chequea que el encuentre un usuario
+        if (user === undefined) {
+            // Si no encuentra => Devuelve error al usuario
+            console.log('ERROR - El usuario no existe');
+            res.status(200).send("Usuario no existe");
+        } else {
+            console.log("hay usuairo");
+            var userRepository = new _typeorm.getRepository(_Users.User);
+            // Si lo que modifica es la password, la hashea
+            if (req.body.password) {
+                req.body.password = await bcrypt.hash(req.body.password, 2);
+            }
+            await userRepository.update(req.params.id, req.body);
+            var _user = await userRepository.findOne({ where: { id: req.params.id }, select: ["id", "userName", "firstName", "lastName", "email"], relations: ["rol"] });
+            res.status(200).send(_user);
         }
+    } catch (error) {
+        res.status(200).send(error);
     }
 };
+
 // Login
 UserController.login = async function (req, res) {
     try {
@@ -94,10 +106,21 @@ UserController.login = async function (req, res) {
 
 //User Info
 UserController.userInfo = async function (req, res) {
-    var userRepository = new _typeorm.getCustomRepository(_UserModel.UserRepository);
-    var userInfo = await userRepository.getUserInfo(req.params.id);
-    var newUserInfo = [{ id: userInfo.id, userName: userInfo.userName, firstName: userInfo.firstName, lastName: userInfo.lastName, email: userInfo.email, rol: userInfo.rol }];
-    res.json(userInfo);
+    try {
+        // Busco un usuario que coincida con el id que viene en la request
+        console.log('Buscando usuario existente...');
+        var user = await new _typeorm.getRepository(_Users.User).findOne({ where: { id: req.params.id }, select: ["id", "userName", "password"], relations: ["rol"] });
+        // Chequea que el encuentre un usuario
+        if (user === undefined) {
+            // Si no encuentra => Devuelve error al usuario
+            console.log('ERROR - El usuario no existe');
+            res.status(200).send("Usuario no existe");
+        } else {
+            res.status(200).send(user);
+        }
+    } catch (error) {
+        res.status(200).send(error);
+    }
 };
 
 module.exports = UserController;
