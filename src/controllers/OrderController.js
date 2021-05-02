@@ -7,7 +7,7 @@ import { ProdOrder } from "../entities/ProdOrder";
 
 const OrderController = {};
 
-// Creación de un nuevo product
+// Creación de una nueva orden
 OrderController.newOrder = async(req,res) => {
     try {
         // Genero una nueva orden
@@ -26,7 +26,7 @@ OrderController.newOrder = async(req,res) => {
             const prod_order = new ProdOrder();
             prod_order.order= savedOrder.id;
             prod_order.product = req.body.products[i].id;
-            prod_order.amount= req.body.products[i].amount;
+            prod_order.quantity= req.body.products[i].quantity;
             await prodOrderRepository.save(prod_order);
         }
         // Busco la orden guardada y la devuelvo en la response
@@ -47,7 +47,7 @@ OrderController.newOrder = async(req,res) => {
         }
     }
 
-    //  Mostrar todos los productos
+    //  Mostrar todas las ordenes
     OrderController.showOrders = async(req,res) => {
     try {
         const orderRepository = new getRepository(Order);

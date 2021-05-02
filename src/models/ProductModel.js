@@ -20,7 +20,7 @@ export class ProductRepository extends Repository {
 
     async findById(id) {
         try {
-        const product = await this.findOne({prodId: id}, {relations: ["category", "idioma", "estado"]});
+        const product = await this.findOne({id: id}, {relations: ["category", "idioma", "estado"]});
       if (product === undefined || product.length <=0) {
             throw "El producto no existe";
         } else {

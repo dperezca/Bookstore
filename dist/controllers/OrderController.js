@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
 
 var OrderController = {};
 
-// Creación de un nuevo product
+// Creación de una nueva orden
 OrderController.newOrder = async function (req, res) {
     try {
         // Genero una nueva orden
@@ -31,7 +31,7 @@ OrderController.newOrder = async function (req, res) {
                 var _prod_order = new _ProdOrder.ProdOrder();
                 _prod_order.order = savedOrder.id;
                 _prod_order.product = req.body.products[i].id;
-                _prod_order.amount = req.body.products[i].amount;
+                _prod_order.quantity = req.body.products[i].quantity;
                 await prodOrderRepository.save(_prod_order);
             }
             // Busco la orden guardada y la devuelvo en la response
@@ -50,7 +50,7 @@ OrderController.newOrder = async function (req, res) {
     }
 };
 
-//  Mostrar todos los productos
+//  Mostrar todas las ordenes
 OrderController.showOrders = async function (req, res) {
     try {
         var orderRepository = new _typeorm.getRepository(_Orders.Order);

@@ -44,7 +44,7 @@ var ProductRepository = exports.ProductRepository = (_dec = (0, _typeorm.EntityR
         key: "findById",
         value: async function findById(id) {
             try {
-                var product = await this.findOne({ prodId: id }, { relations: ["category", "idioma", "estado"] });
+                var product = await this.findOne({ id: id }, { relations: ["category", "idioma", "estado"] });
                 if (product === undefined || product.length <= 0) {
                     throw "El producto no existe";
                 } else {

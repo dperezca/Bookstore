@@ -67,8 +67,10 @@ ProductController.findAll = async(req,res) => {
 //Revisar quien es el creador 
 ProductController.checkIfCreator = async(req,res,next) => {
     try {
+        console.log("Chequeando que el usuario sea el creador o un admin");
         const productRepository = new getCustomRepository(ProductRepository);
         const producto = await productRepository.findById(req.params.id);
+        console.log(producto.created.id);
         // Controlo que el creador sea el mismo usuario que el usuario del TOKEN activo
         if (producto.created.id === req.user) {
             next();
@@ -86,11 +88,14 @@ ProductController.checkIfCreator = async(req,res,next) => {
  //Update by ID
  ProductController.updateById = async(req,res) => {
     try {
+        console.log("aca");
         const productRepository = new getCustomRepository(ProductRepository);
+        console.log(req.params.id);
         const productoUpdated = await productRepository.updateById(req.params.id,req.body);
         res.send(await productRepository.findById(req.params.id));
         }     
         catch(error) {
+            console.log(error);
             res.status(200).send(error);
     }
  }  

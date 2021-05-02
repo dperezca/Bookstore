@@ -69,11 +69,11 @@ UserController.login = async(req,res) => {
         console.log(`Buscando usuario existente...`);
         const user = await new getRepository(User).findOne({where: {userName: req.body.username}, select: ["id", "userName", "password"], relations: ["rol"]})
         // Chequea que el encuentre un usuario
-        if (user === 'undefined' || user.length <= 0) {
+        if (user === undefined || user.length <= 0) {
             // Si no encuentra => Devuelve error al usuario
             console.log(`ERROR - El usuario no existe`);
             res.status(200).send("Usuario no existe");
-        } 
+        } else {
         // Si lo encuentra, compara la contraseña de la request con la guardada
         // Primero hashea la contraseña
         console.log(`OK - Usuario encontrado: ${user.id}`);
@@ -91,7 +91,7 @@ UserController.login = async(req,res) => {
         const token = service.createToken(user.id, user.rol.rolId);
         console.log(`OK - Token ${token}`)
         res.status(200).send({token: token});
-        }
+        }}
     }
         catch(error) {
             console.log(`ERROR: ${error}`);
@@ -104,7 +104,7 @@ UserController.userInfo = async(req,res) => {
     try {
         // Busco un usuario que coincida con el id que viene en la request
         console.log(`Buscando usuario existente...`);
-        const user = await new getRepository(User).findOne({where: {id: req.params.id}, select: ["id", "userName", "password"], relations: ["rol"]})
+        const user = await new getRepository(User).findOne({where: {id: req.params.id}, select: ["id", "userName", "password", "firstName","lastName", "email"], relations: ["rol"]})
         // Chequea que el encuentre un usuario
         if (user === undefined) {
             // Si no encuentra => Devuelve error al usuario
